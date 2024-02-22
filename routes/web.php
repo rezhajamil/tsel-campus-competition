@@ -25,6 +25,11 @@ Route::group(['middleware' => 'auth'], function() {
     })->name('dashboard');
 
     Route::view('profile','profile')->name('profile');
+    Route::view('model-bisnis','model-bisnis')->name('model-bisnis');
+    // Route::view('myproject','myproject')->name('myproject');
+    Route::get('/myproject', function () {
+        return view('myproject');
+    })->name('myproject');
 });
 
 require __DIR__.'/auth.php';

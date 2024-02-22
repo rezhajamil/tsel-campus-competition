@@ -79,6 +79,7 @@ class RegisteredUserController extends Controller
             'telp' => $request->telp,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'Peserta', // Peran default 'peserta'
         ]);
 
         // Panggil event Registered untuk menandakan bahwa user telah terdaftar
