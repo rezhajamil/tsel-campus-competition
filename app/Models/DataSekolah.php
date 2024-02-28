@@ -14,7 +14,7 @@ class DataSekolah extends Model
      *
      * @var string
      */
-    protected $table = 'data_sekolah_sumatra';
+    protected $table = 'data_sekolah_sumatera';
 
     /**
      * The primary key associated with the table.

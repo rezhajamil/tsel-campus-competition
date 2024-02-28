@@ -22,7 +22,7 @@ class CreatePendaftaranTable extends Migration
 
             // Define foreign key constraints
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->foreign('kelompok_id')->references('id')->on('kategori');
+            $table->foreign('kelompok_id')->references('id')->on('kelompok');
             $table->foreign('proposal_id')->references('id_proposal')->on('proposal');
         });
     }

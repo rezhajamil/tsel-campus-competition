@@ -1,12 +1,12 @@
 @extends('dashboard')
 
-@section('judul')
+@section('judul_content')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('My Project') }}
     </h2>
-    <a href="{{ route('model-bisnis') }}">
+    <a href="{{ route('nama_kelompok') }}">
         <button type="button"
-            class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            class="inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white hover:text-red-600 hover:border-red-600 hover:border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="-ml-0.5 mr-1.5 h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -69,7 +69,7 @@
             <div class="mt-5 flex lg:ml-4 lg:mt-0">
 
                 <span class="mr-3 block">
-                    <a href="{{ route('model-bisnis') }}">
+                    <a href="{{ route('peserta.index') }}">
                         <button type="button"
                             class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                             <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
@@ -95,25 +95,10 @@
                         Publish
                     </button>
                 </span>
-
-                <!-- Dropdown -->
-                {{-- <div class="relative ml-3 sm:hidden">
-                <button type="button"
-                    class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
-                    id="mobile-menu-button" aria-expanded="false" aria-haspopup="true">
-                    More
-                    <svg class="-mr-1 ml-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20"
-                        fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div> --}}
             </div>
         </div>
 
-        <div>
+        <div class="mt-4">
             <h2 class="sr-only">Steps</h2>
 
             <div class="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">

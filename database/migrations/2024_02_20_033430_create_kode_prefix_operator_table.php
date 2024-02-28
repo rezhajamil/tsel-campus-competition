@@ -72,6 +72,6 @@ class CreateKodePrefixOperatorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kode_prefix_operator');
+        
     }
 }

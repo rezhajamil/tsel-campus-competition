@@ -411,8 +411,15 @@
 </head>
 
 <body class="antialiased bg-[url('/images/bg-welcome.svg')] bg-no-repeat bg-cover">
-    <nav class="relative font-batik text-4xl border-b-2 border-red-500 w-full h-16 flex justify-center py-3 bg-white">
-        <img src="https://www.telkomsel.com/sites/default/files/mainlogo-2022-rev.png" alt="Telkomsel" class="w-36 h-12">
+    <nav class="relative font-batik items-center border-b-2 border-red-500 w-full h-16 flex px-3 py-3 bg-white justify-between">
+        <div class="flex gap-2">
+            <img src="https://seeklogo.com/images/T/telkomsel-logo-4EC1FC20C9-seeklogo.com.png" alt="" class="block h-10 w-auto fill-current">
+            <img src="https://logosmarcas.net/wp-content/uploads/2021/06/Telkomsel-Logo.png" alt="" class="hidden sm:block h-10 w-auto fill-current">    
+        </div>
+        <div class=" text-md sm:text-2xl text-red-600">Telkomsel Campus Competition</div>
+        <div>        
+            <img src="https://iconape.com/wp-content/png_logo_vector/byu-logo-blue.png" alt="" class="block h-10 w-auto fill-current">
+        </div>
     </nav>
     <main class="relative min-h-screen flex justify-center sm:items-center py-4 sm:pt-0 flex-col">
         <div class="max-w-6xl lg:w-4/5 grid lg:grid-cols-2 sm:grid-cols-1 sm:mx-auto gap-2 mx-10">

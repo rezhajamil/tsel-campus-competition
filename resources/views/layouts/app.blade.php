@@ -19,25 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Mendapatkan nama halaman Laravel saat ini
-            var currentPage = "{{ Route::currentRouteName() }}";
-
-            // Ubah konten div berdasarkan halaman yang aktif
-            switch (currentPage) {
-                case 'home':
-                    $('#content').html('<p>Ini halaman beranda</p>');
-                    break;
-                case 'about':
-                    $('#content').html('<p>Ini halaman tentang kami</p>');
-                    break;
-                    // Tambahkan kasus lain sesuai dengan halaman Anda
-                default:
-                    $('#content').html('<p>Halaman tidak ditemukan</p>');
-            }
-        });
-    </script>
+    
 
     <style>
         @font-face {
@@ -63,6 +45,7 @@
             {{ $slot }}
         </main>
     </div>
+    
 </body>
 
 </html>

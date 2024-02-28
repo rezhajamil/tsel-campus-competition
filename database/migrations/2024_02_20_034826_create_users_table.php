@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('user_id'); // Mengubah nama kolom id menjadi user_id dan menetapkannya sebagai primary key
             $table->string('name');
+            $table->string('npsn')->nullable();
+            $table->string('nim')->unique()->nullable();
             $table->string('telp', 15)->unique(); // Menetapkan panjang maksimum 15 karakter dan menetapkan sebagai unik
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Datadiri extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Kategori extends Model
      *
      * @var string
      */
-    protected $table = 'kategori';
+    protected $table = 'datadiri';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +22,13 @@ class Kategori extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
+        'nama_lengkap',
+        'npsn',
+        'nim',
         'nama_kelompok',
+        'nomor_wa',
+        'email',
     ];
 
     /**
@@ -31,6 +37,14 @@ class Kategori extends Model
      * @var array
      */
     protected $casts = [
-        'nama_kelompok' => 'string',
+        'user_id' => 'integer',
     ];
+
+    /**
+     * Get the user that owns the peserta.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

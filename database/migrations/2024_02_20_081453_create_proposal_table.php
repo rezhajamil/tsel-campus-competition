@@ -17,6 +17,7 @@ class CreateProposalTable extends Migration
             $table->bigIncrements('id_proposal');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelompok_id');
+            $table->string('[judul_proposal]')->nullable();
             $table->longText('ide_bisnis')->nullable();
             $table->string('model_bisnis_canvas')->nullable();
             $table->longText('deskripsi_laba_rugi')->nullable();
@@ -30,7 +31,7 @@ class CreateProposalTable extends Migration
 
 
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->foreign('kelompok_id')->references('id')->on('kategori');
+            $table->foreign('kelompok_id')->references('id')->on('kelompok');
         });
     }
 
