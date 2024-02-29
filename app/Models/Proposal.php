@@ -16,6 +16,13 @@ class Proposal extends Model
      */
     protected $table = 'proposal';
 
+    protected $primaryKey = 'id_proposal';
+
+    public function pendaftarans()
+    {
+        return $this->hasMany(Pendaftaran::class, 'id_proposal');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +31,7 @@ class Proposal extends Model
     protected $fillable = [
         'user_id',
         'kelompok_id',
+        'judul_proposal',
         'ide_bisnis',
         'model_bisnis_canvas',
         'deskripsi_laba_rugi',

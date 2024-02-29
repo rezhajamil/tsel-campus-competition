@@ -10,7 +10,7 @@
                     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('My Team') }}
                     </h1>
-                    <a href="{{ route('create_anggota') }}">
+                    <a href="{{ route('anggota.add') }}">
                         <button type="button"
                             class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -74,110 +74,110 @@
 
             </div>
         </div>
+        {{-- Step --}}
+        <div class="bg-white px-10 py-8  mx-5 rounded-lg">
 
-        {{-- TimeLine --}}
-        <div class="bg-white grid grid-flow-row grid-rows-4 px-10 mx-5 gap-2 rounded-lg">
-            {{-- judul --}}
-            <div class="flex justify-center items-center border-b-2">
-                <h1 class="font-batik text-lg">{{ __('Timeline') }}</h1>
-            </div>
-            <!-- Progress bar -->
-            <div class=" row-span-3 px-10 pb-10">
-                <ol
-                    class="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400 mt-3">
-                    <li class="mb-10 ms-6">
-                        <span
-                            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
-                            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+            <ol class="">
+                <li>
+                    <div class="w-full p-4 text-green-700 border border-green-300 rounded-lg bg-green-50 dark:bg-white dark:border-green-800 dark:text-green-400"
+                        role="alert">
+                        <div class="flex items-center justify-between">
+                            <span class="sr-only">User info</span>
+                            <h3 class="font-medium">1. User info</h3>
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 16 12">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
                             </svg>
-                        </span>
-                        <h3 class="font-medium leading-tight">Personal Info</h3>
-                        <p class="text-sm">Step details here</p>
-                    </li>
-                    <li class="mb-10 ms-6">
-                        <span
-                            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                <path
-                                    d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
-                        <h3 class="font-medium leading-tight">Account Info</h3>
-                        <p class="text-sm">Step details here</p>
-                    </li>
-                    <li class="mb-10 ms-6">
-                        <span
-                            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path
-                                    d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
-                        <h3 class="font-medium leading-tight">Review</h3>
-                        <p class="text-sm">Step details here</p>
-                    </li>
-                    <li class="ms-6">
-                        <span
-                            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path
-                                    d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
-                            </svg>
-                        </span>
-                        <h3 class="font-medium leading-tight">Confirmation</h3>
-                        <p class="text-sm">Step details here</p>
-                    </li>
-                </ol>
-            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ol>
 
         </div>
 
         {{-- Tab --}}
         <div class="px-5 sm:ml-10 mt-5 col-span-3">
-            <div class="p-6 bg-white border-b border-gray-200">
+            <div class="border-b-2 px-5 py-2">
+                <h1 class="font-batik text-md sm:text-lg text-gray-800 leading-tight uppercase">
+                    @foreach ($proposal as $data)
+                        {{ $data->judul_proposal }}
+                    @endforeach
+                </h1>
+            </div>
+            <div class="p-6 bg-white border-b border-gray-200 grid grid-flow-row grid-row-2">
                 <div>
-                    <div class="sm:hidden sm:w-screen w-80">
-                        <label for="Tab" class="sr-only">Tab</label>
+                    <div class="sm:hidden sm:w-screen w-74">
 
-                        <select id="Tab" class="w-full mr-5 rounded-md border-gray-200">
-                            <option>Settings</option>
-                            <option>Messages</option>
-                            <option>Archive</option>
-                            <option select>Notifications</option>
-                        </select>
+                        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            type="button">Menu Project<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdown"
+                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownDefaultButton">
+                                <li>
+                                    <a href="{{ route('ide-bisnis') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ide
+                                        Bisnis</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('laba-rugi') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Laba
+                                        Rugi</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('pemasaran') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pemasaran</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('maintenance') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Maintenance</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
 
                     <div class="hidden sm:block">
                         <div class="border-b border-gray-200">
                             <nav class="-mb-px flex gap-6">
-                                <a href="#"
-                                    class="shrink-0 border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-                                    Settings
+                                <a href="{{ route('ide-bisnis') }}"
+                                    class="shrink-0 {{ request()->routeIs('ide-bisnis') ? 'rounded-t-lg border border-gray-300 border-b-white p-3 text-sm font-medium text-sky-600' : 'border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700' }} ">
+                                    Ide Bisnis
                                 </a>
 
-                                <a href="#"
-                                    class="shrink-0 border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-                                    Messages
+                                <a href="{{ route('laba-rugi') }}"
+                                    class="shrink-0 {{ request()->routeIs('laba-rugi') ? 'rounded-t-lg border border-gray-300 border-b-white p-3 text-sm font-medium text-sky-600' : 'border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700' }} ">
+                                    Laba Rugi
                                 </a>
 
-                                <a href="#"
-                                    class="shrink-0 border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-                                    Archive
+                                <a href="{{ route('pemasaran') }}"
+                                    class="shrink-0 {{ request()->routeIs('pemasaran') ? 'rounded-t-lg border border-gray-300 border-b-white p-3 text-sm font-medium text-sky-600' : 'border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700' }} ">
+                                    Pemasaran
                                 </a>
 
-                                <a href="#"
-                                    class="shrink-0 rounded-t-lg border border-gray-300 border-b-white p-3 text-sm font-medium text-sky-600">
-                                    Notifications
+                                <a href="{{ route('maintenance') }}"
+                                    class="shrink-0 {{ request()->routeIs('maintenance') ? 'rounded-t-lg border border-gray-300 border-b-white p-3 text-sm font-medium text-sky-600' : 'border border-transparent p-3 text-sm font-medium text-gray-500 hover:text-gray-700' }} ">
+                                    Maintenance
                                 </a>
                             </nav>
                         </div>
                     </div>
+                </div>
+                <div class="h-fit w-full border mt-5">
+                    <div>
+                        @yield('content')
+                    </div>
+                    <div></div>
                 </div>
             </div>
 

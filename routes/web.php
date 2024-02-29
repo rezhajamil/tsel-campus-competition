@@ -49,19 +49,27 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/dashboard/data-diri/edit', [DatadiriController::class, 'create'])->name('data-diri.update');
 
     //project
-    Route::get('/myproject', [ProjectController::class,'view_all'])->name('view_all');
+    Route::get('/myproject', [ProjectController::class,'my_project'])->name('my_project');
+    Route::get('/dashboard/model-bisnis',[ProjectController::class, 'index'])->name('model-bisnis');
         //kelompok
         Route::get('/create-project/kelompok', function(){
             return view('user.myproject.create-kelompok');
         })->name('nama_kelompok');
 
         Route::post('/create-project/create-kelompok', [ProjectController::class,'create_kelompok'])->name('create_kelompok');
-        //Team
+
+        //anggota
+        Route::get('/myproject/anggota',[ProjectController::class, 'kelompok'])->name('anggota.add');
         Route::post('/myproject/create-anggota', [ProjectController::class, 'create_anggota'])->name('create_anggota');
+
         //proposal
+        Route::get('/create-project/ide-bisnis',[ProjectController::class, 'index'])->name('ide-bisnis');
+        Route::get('/create-project/laba-rugi',[ProjectController::class, 'index'])->name('laba-rugi');
+        Route::get('/create-project/pemasaran',[ProjectController::class, 'index'])->name('pemasaran');
+        Route::get('/create-project/maintenance',[ProjectController::class, 'index'])->name('maintenance');
 
     Route::get('/model-bisnis/create-tim',[PesertaController::class, 'index'])->name('create.index');
-    Route::get('/dashboard/model-bisnis',[PesertaController::class, 'index'])->name('peserta.index');
+
     Route::get('/get-kampus-by-keyword', [KampusController::class, 'getKampusByKeyword'])->name('get-kampus-by-keyword');
 });
 

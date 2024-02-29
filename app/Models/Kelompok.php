@@ -16,6 +16,17 @@ class Kelompok extends Model
      */
     protected $table = 'kelompok';
 
+    protected $primaryKey = 'id';
+
+    public function pendaftarans()
+    {
+        return $this->hasMany(Pendaftaran::class, 'id');
+    }
+    public function proposal()
+    {
+        return $this->hasMany(Proposal::class, 'id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

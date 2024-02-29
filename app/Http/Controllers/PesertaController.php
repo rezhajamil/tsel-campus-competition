@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peserta;
 use App\Models\Kategori;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class PesertaController extends Controller
     {
         $routeName = $request->route()->getName();
 
-       
+
         // Menentukan nilai $page berdasarkan nama route
         $page = '';
         if ($routeName === 'data-diri.index') {
@@ -23,19 +24,21 @@ class PesertaController extends Controller
             $page = 'myproject.model-bisnis';
         } elseif ($routeName === 'myproject') {
             $page = 'myproject.myproject';
-        }elseif ($routeName === 'create.index') {
+        } elseif ($routeName === 'create.index') {
             $page = 'myproject.create-tim';
-        }// Anda bisa tambahkan kondisi lain sesuai kebutuhan
-    
+        } elseif ($routeName === 'ide-bisnis') {
+            $page = 'myproject.form.form-ide-bisnis';
+        } // Anda bisa tambahkan kondisi lain sesuai kebutuhan
+
         // Mendapatkan ID pengguna yang sedang login
         $userId = Auth::user()->user_id;
-    
+
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        
-        // Mengembalikan view dengan data peserta
-        return view('user.'.$page, ['pesertaList' => $pesertaList]);
+        $proposal = Proposal::where('user_id', $userId)->get();
 
+        // Mengembalikan view dengan data peserta
+        return view('user.' . $page, ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
     }
     public function store(Request $request)
     {
@@ -43,7 +46,6 @@ class PesertaController extends Controller
 
         // Menghitung jumlah anggota yang sudah ada dengan user_id yang sama
         $jumlahAnggota = Peserta::where('user_id', $userId)->count();
-        $pesertaList = Peserta::where('user_id', $userId)->get();
 
         $request->validate([
             'user_id' => 'required|exists:users,user_id',
@@ -73,7 +75,7 @@ class PesertaController extends Controller
             'kemampuan_deskripsi.max' => 'Deskripsi kemampuan tidak boleh lebih dari 255 karakter.',
             'jabatan.required' => 'Jabatan wajib diisi.',
         ]);
-       
+
 
         // Memeriksa apakah jumlah anggota sudah mencapai batas maksimum (5)
         if ($jumlahAnggota <= 5) {

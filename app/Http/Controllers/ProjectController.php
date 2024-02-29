@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peserta;
 use App\Models\Kelompok;
 use App\Models\Proposal;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,43 @@ class ProjectController extends Controller
 {
 
     //view all
-    public function view_all() {
-        $proposal = Proposal::all();
+    public function my_project() {
+        $userId = auth::user()->user_id;
+        $pendaftaran = Pendaftaran::with(['user', 'kelompok', 'proposal'])
+        ->where('user_id',$userId)
+        ->get();
+        $jumlahAnggota = Peserta::where('user_id', $userId)->count();
+        return view('/user/myproject/myproject', ['pendaftaran' => $pendaftaran, 'anggota'=>$jumlahAnggota]);
+    }
 
-        $kelompok = Kelompok::all();
+    public function index(Request $request)
+    {
+        $routeName = $request->route()->getName();
+
+
+        // Menentukan nilai $page berdasarkan nama route
+        $page = '';
+        if ($routeName === 'ide-bisnis') {
+            $page = 'myproject.form.form-ide-bisnis';
+        }elseif ($routeName === 'laba-rugi') {
+            $page = 'myproject.form.form-laba-rugi';
+        }elseif ($routeName === 'pemasaran') {
+            $page = 'myproject.form.form-pemasaran';
+        }elseif ($routeName === 'maintenance') {
+            $page = 'myproject.form.form-ide-bisnis';
+        }elseif ($routeName === 'model-bisnis') {
+            $page = 'myproject.model-bisnis';
+        } // Anda bisa tambahkan kondisi lain sesuai kebutuhan
+
+        // Mendapatkan ID pengguna yang sedang login
+        $userId = Auth::user()->user_id;
+
+        // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
+        $pesertaList = Peserta::where('user_id', $userId)->get();
+        $proposal = Proposal::where('user_id', $userId)->get();
+
+        // Mengembalikan view dengan data peserta
+        return view('user.' . $page, ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
     }
 
     //kelompok
@@ -23,6 +57,7 @@ class ProjectController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,user_id',
             'nama_kelompok' =>  'required|string|unique:kelompok,nama_kelompok',
+            'judul_proposal' =>  'required|string',
         ], [
             'user_id.required' => 'User ID wajib diisi.',
             'user_id.exists' => 'User ID tidak valid.',
@@ -30,13 +65,27 @@ class ProjectController extends Controller
         ]);
     
         $user = Auth::user();
-            Kelompok::create($request->all());
+            $kelompok = Kelompok::create([
+                'user_id'=>$user->user_id,
+                'nama_kelompok' => $request->nama_kelompok,
+            ]);
+            $proposal = Proposal::create([
+                'user_id'=>$user->user_id,
+                'kelompok_id'=>$kelompok->id,
+                'judul_proposal' => $request->judul_proposal,
+                'status'=>'Proses',
+            ]);
+            $pendaftaran = Pendaftaran::create([
+                'user_id'=>$user->user_id,
+                'kelompok_id'=>$kelompok->id,
+                'proposal_id'=>$proposal->id_proposal,
+            ]);
             Peserta::create([
                 'user_id' => $user->user_id,
                 'nama_lengkap' => $user->name,
                 'npsn' => $user->npsn,
                 'nim' => $user->nim,
-                'nama_kelompok' => $request->nama_kelompok,
+                'nama_kelompok' => $kelompok->nama_kelompok,
                 'nomor_wa' => $user->telp,
                 'email' => $user->email,
                 'kemampuan_deskripsi' => '',
@@ -47,15 +96,12 @@ class ProjectController extends Controller
             return redirect('/dashboard/model-bisnis')->with('error', 'Nama Kelompok sudah ada');
     }
 
-    public function kelompok(){
-
-    }
-
 
     //anggota
     public function create_anggota(Request $request){
 
         $userId = Auth::user()->user_id;
+        //menentukan kelompok berdasarkan user_id
 
         // Menghitung jumlah anggota yang sudah ada dengan user_id yang sama
         $jumlahAnggota = Peserta::where('user_id', $userId)->count();

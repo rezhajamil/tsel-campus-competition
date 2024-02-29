@@ -8,7 +8,7 @@
             @foreach ($pesertaList as $peserta)
                 @if ($peserta->jabatan == 'Ketua')
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                    <form method="POST" action="{{ route('peserta.store') }}">
+                    <form method="POST" action="{{ route('create_anggota') }}">
                         @csrf
                         <div>
                             <div>
