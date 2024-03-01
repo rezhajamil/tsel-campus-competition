@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Datadiri;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KampusController;
 use App\Http\Controllers\PesertaController;
-use App\Http\Controllers\DatadiriController;
 use App\Http\Controllers\ProjectController;
-use App\Models\Datadiri;
+use App\Http\Controllers\DatadiriController;
+use App\Http\Controllers\IdeBisnisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -33,11 +34,11 @@ Route::group(['middleware' => 'auth'], function() {
         return view('user.myproject.myproject');
     })->name('myproject');
 
-    Route::get('/myproject/create-kelompok', function(){
+    Route::get('/myproject/create-kelompok', function () {
         return view('user.myproject.create-kelompok');
     })->name('kelompok');
 
-    Route::get('/edit-profile', function(){
+    Route::get('/edit-profile', function () {
         return view('user.datadiri.data-diri-edit');
     })->name('edit_profile');
 
@@ -45,32 +46,36 @@ Route::group(['middleware' => 'auth'], function() {
 
     //datadiri
     Route::get('/dashboard/data-diri', [DatadiriController::class, 'index'])->name('data-diri');
-    Route::get('/data-diri/edit', [DatadiriController::class,'index'])->name('data-diri-edit');
+    Route::get('/data-diri/edit', [DatadiriController::class, 'index'])->name('data-diri-edit');
     Route::post('/dashboard/data-diri/edit', [DatadiriController::class, 'create'])->name('data-diri.update');
 
     //project
-    Route::get('/myproject', [ProjectController::class,'my_project'])->name('my_project');
-    Route::get('/dashboard/model-bisnis',[ProjectController::class, 'index'])->name('model-bisnis');
-        //kelompok
-        Route::get('/create-project/kelompok', function(){
-            return view('user.myproject.create-kelompok');
-        })->name('nama_kelompok');
+    Route::get('/myproject', [ProjectController::class, 'my_project'])->name('my_project');
+    Route::get('/myproject/proposal/{id_proposal}', [PesertaController::class, 'index'])->name('model-bisnis');
+    //kelompok
+    Route::get('/create-project/kelompok', function () {
+        return view('user.myproject.create-kelompok');
+    })->name('nama_kelompok');
 
-        Route::post('/create-project/create-kelompok', [ProjectController::class,'create_kelompok'])->name('create_kelompok');
+    Route::post('/create-project/create-kelompok', [ProjectController::class, 'create_kelompok'])->name('create_kelompok');
 
-        //anggota
-        Route::get('/myproject/anggota',[ProjectController::class, 'kelompok'])->name('anggota.add');
-        Route::post('/myproject/create-anggota', [ProjectController::class, 'create_anggota'])->name('create_anggota');
+    //anggota
+    Route::get('/myproject/anggota', [ProjectController::class, 'kelompok'])->name('anggota.add');
+    Route::post('/myproject/create-anggota', [ProjectController::class, 'create_anggota'])->name('create_anggota');
 
-        //proposal
-        Route::get('/create-project/ide-bisnis',[ProjectController::class, 'index'])->name('ide-bisnis');
-        Route::get('/create-project/laba-rugi',[ProjectController::class, 'index'])->name('laba-rugi');
-        Route::get('/create-project/pemasaran',[ProjectController::class, 'index'])->name('pemasaran');
-        Route::get('/create-project/maintenance',[ProjectController::class, 'index'])->name('maintenance');
+    //proposal
+    Route::get('/proposal/form-ide-bisnis', [ProjectController::class, 'ide_bisnis'])->name('ide-bisnis');
+    Route::post('/proposal/form-ide-bisnis/input',[ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
+    Route::get('/proposal/form-laba-rugi', [ProjectController::class, 'laba_rugi'])->name('laba-rugi');
+    Route::post('/proposal/form-laba-rugi/input', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
+    Route::get('/proposal/form-pemasaran', [ProjectController::class, 'pemasaran'])->name('pemasaran');
+    Route::post('/proposal/form-pemasaran/input', [ProjectController::class, 'pemasaran_create'])->name('pemasaran.input');
+    Route::get('/proposal/form-maintenance', [ProjectController::class, 'maintenance'])->name('maintenance');
+    Route::post('/proposal/form-maintenance/input', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
 
-    Route::get('/model-bisnis/create-tim',[PesertaController::class, 'index'])->name('create.index');
+    Route::get('/model-bisnis/create-tim', [PesertaController::class, 'index'])->name('create.index');
 
     Route::get('/get-kampus-by-keyword', [KampusController::class, 'getKampusByKeyword'])->name('get-kampus-by-keyword');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

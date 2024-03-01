@@ -66,6 +66,6 @@ class Proposal extends Model
      */
     public function kelompok()
     {
-        return $this->belongsTo(Kategori::class, 'kelompok_id');
+        return $this->belongsTo(Kelompok::class, 'kelompok_id');
     }
 }

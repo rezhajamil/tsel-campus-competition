@@ -13,32 +13,18 @@ class PesertaController extends Controller
 {
     public function index(Request $request)
     {
-        $routeName = $request->route()->getName();
-
-
         // Menentukan nilai $page berdasarkan nama route
-        $page = '';
-        if ($routeName === 'data-diri.index') {
-            $page = 'datadiri.data-diri';
-        } elseif ($routeName === 'peserta.index') {
-            $page = 'myproject.model-bisnis';
-        } elseif ($routeName === 'myproject') {
-            $page = 'myproject.myproject';
-        } elseif ($routeName === 'create.index') {
-            $page = 'myproject.create-tim';
-        } elseif ($routeName === 'ide-bisnis') {
-            $page = 'myproject.form.form-ide-bisnis';
-        } // Anda bisa tambahkan kondisi lain sesuai kebutuhan
+        $id_proposal = $request->route('id_proposal');
 
         // Mendapatkan ID pengguna yang sedang login
         $userId = Auth::user()->user_id;
 
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $proposal = Proposal::where('user_id', $userId)->get();
+        $proposal = Proposal::where('id_proposal', $id_proposal)->get();
 
         // Mengembalikan view dengan data peserta
-        return view('user.' . $page, ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
+        return view('user.myproject.model-bisnis', ['pesertaList' => $pesertaList, 'proposal' => $proposal,'id_proposal' => $id_proposal]);
     }
     public function store(Request $request)
     {
