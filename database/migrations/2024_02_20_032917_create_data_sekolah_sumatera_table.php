@@ -78,6 +78,6 @@ class CreateDataSekolahSumateraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_sekolah_sumatera');
+        // Schema::dropIfExists('data_sekolah_sumatera');
     }
 }
