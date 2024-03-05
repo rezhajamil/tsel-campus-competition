@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
 
-    //view all
+    //view all in my project
     public function my_project()
     {
         $userId = auth::user()->user_id;
@@ -49,7 +49,7 @@ class ProjectController extends Controller
     }
 
 
-    //form
+    //form input
     public function ide_bisnis(Request $request)
     {
         // Mendapatkan ID pengguna yang sedang login
@@ -57,6 +57,7 @@ class ProjectController extends Controller
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
         $proposal = Proposal::where('user_id', $userId)->get();
+        $pendaftaran = Pendaftaran::where('user_id', $userId)->get();
 
         return view('user.myproject.form.form-ide-bisnis', ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
     }
@@ -119,6 +120,7 @@ class ProjectController extends Controller
             'user_id' => $user->user_id,
             'kelompok_id' => $kelompok->id,
             'proposal_id' => $proposal->id_proposal,
+            'status' => 'Proses',
         ]);
         Peserta::create([
             'user_id' => $user->user_id,
@@ -136,12 +138,13 @@ class ProjectController extends Controller
         return redirect('/dashboard/myproject')->with('error', 'Nama Kelompok sudah ada');
     }
 
-    public function kelompok(){
+    public function kelompok()
+    {
         $userId = Auth::user()->user_id;
         $peserta = Peserta::where('user_id', $userId)->get();
         $proposal = Proposal::where('user_id', $userId)->get();
 
-        return view('user.myproject.create-tim', ['pesertaList' => $peserta, 'proposal'=>$proposal]);
+        return view('user.myproject.create-tim', ['pesertaList' => $peserta, 'proposal' => $proposal]);
     }
 
 
@@ -151,7 +154,7 @@ class ProjectController extends Controller
 
         $userId = Auth::user()->user_id;
         //menentukan proposal berdasarkan user_id
-        $proposal = Proposal::where('user_id',$userId)->get();
+        $proposal = Proposal::where('user_id', $userId)->get();
 
         // Menghitung jumlah anggota yang sudah ada dengan user_id yang sama
         $jumlahAnggota = Peserta::where('user_id', $userId)->count();
@@ -185,18 +188,18 @@ class ProjectController extends Controller
             'jabatan.required' => 'Jabatan wajib diisi.',
         ]);
 
-        foreach($proposal as $data){
+        foreach ($proposal as $data) {
             // Memeriksa apakah jumlah anggota sudah mencapai batas maksimum (5)
             if ($jumlahAnggota <= 5) {
                 Peserta::create($request->all());
-                return redirect('/myproject/proposal/'.$data->id_proposal)->with('success', 'Data berhasil disimpan.');
+                return redirect('/myproject/proposal/' . $data->id_proposal)->with('success', 'Data berhasil disimpan.');
             } else {
-                return redirect('/myproject/proposal/'.$data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
+                return redirect('/myproject/proposal/' . $data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
             }
         }
     }
 
-    //proposal
+    //proposal Create
     public function ide_bisnis_create(Request $request)
     {
         $request->validate([
@@ -290,5 +293,20 @@ class ProjectController extends Controller
 
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
         return redirect()->back()->with('success', 'Proposal berhasil diperbarui.');
+    }
+
+    public function publish()
+    {
+        $userId = Auth::user()->user_id;
+        $pendaftaran = Pendaftaran::with(['user', 'kelompok', 'proposal'])
+            ->where('user_id', $userId)
+            ->get();
+            foreach ($pendaftaran as $daftar){
+                $daftar->proposal->status = 'Publish';
+                $daftar->proposal->save();
+                $daftar->status = 'Seleksi';
+                $daftar->save();
+            }
+            return redirect('/myproject')->with('success', 'Data berhasil disimpan.');
     }
 }

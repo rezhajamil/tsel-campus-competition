@@ -9,7 +9,7 @@
                         <div class=" row-span-7 px-3 py-5">
                             <div>
                                 <div class="font-medium text-base text-gray-800 uppercase">{{ Auth::user()->name }}</div>
-                                <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
+                                <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
                             </div>
                             <h1 class=" font-bold text-2xl border-b-2 border-indigo-900">MENU</h1>
                             <a href="{{ route('dashboard') }}"
@@ -44,7 +44,7 @@
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                         this.closest('form').submit();"
-                                    class="text-red-600 font-bold border border-red-600 rounded-md text-sm flex justify-center p-2">
+                                    class="text-red-600 font-bold border-2 border-red-600 hover:bg-red-600 hover:text-white rounded-md text-sm flex justify-center p-2">
                                     {{ __('Log Out') }}
                                 </a>
                             </form>

@@ -52,11 +52,12 @@ Route::group(['middleware' => 'auth'], function () {
     //project
     Route::get('/myproject', [ProjectController::class, 'my_project'])->name('my_project');
     Route::get('/myproject/proposal/{id_proposal}', [PesertaController::class, 'index'])->name('model-bisnis');
+    Route::post('/myproject/publish',[ProjectController::class, 'publish'])->name('publish');
+
     //kelompok
     Route::get('/create-project/kelompok', function () {
         return view('user.myproject.create-kelompok');
     })->name('nama_kelompok');
-
     Route::post('/create-project/create-kelompok', [ProjectController::class, 'create_kelompok'])->name('create_kelompok');
 
     //anggota

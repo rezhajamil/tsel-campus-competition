@@ -25,7 +25,6 @@
                         d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
                         clip-rule="evenodd" />
                 </svg>
-
                 <strong class="block font-medium"> Silahkan Lengkapi Data Diri Terlebih Dahulu!! </strong>
             </div>
         </div>
@@ -76,7 +75,7 @@
                     <!-- Success -->
                     <span
                         class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-blue-700">
-                        <p class="whitespace-nowrap text-sm">Success</p>
+                        <p class="whitespace-nowrap text-sm">Publish</p>
                     </span>
                 @endif
             @endif
@@ -205,7 +204,7 @@
                     @if ($daftar->proposal->status == 'Publish')
                         <span class="sm:ml-3">
                             <button type="button" disabled
-                                class="inline-flex items-center rounded-md bg-emerald-300 px-3 py-2 text-sm font-semibold text-gray-500 cursor-not-allowed shadow-sm">
+                                class="inline-flex items-center rounded-md bg-emerald-300 px-3 py-2 text-sm font-semibold text-emerald-800 cursor-not-allowed shadow-sm">
                                 <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
                                     aria-hidden="true">
                                     <path fill-rule="evenodd"
@@ -216,10 +215,10 @@
                             </button>
                         </span>
                     @else
-                        @if ($adaKolomKosong && $daftar->kelompok->nama_kelompok == null && $anggota >= 3 || $anggota <=5)
+                        @if (($adaKolomKosong && $daftar->kelompok->nama_kelompok == null && $anggota >= 3) || $anggota <= 4)
                             <span class="sm:ml-3">
-                                <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-                                    class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                <button type="button" disabled
+                                    class="inline-flex items-center rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-500 cursor-not-allowed shadow-sm">
                                     <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
                                         aria-hidden="true">
                                         <path fill-rule="evenodd"
@@ -231,8 +230,8 @@
                             </span>
                         @else
                             <span class="sm:ml-3">
-                                <button type="button" disabled
-                                    class="inline-flex items-center rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-500 cursor-not-allowed shadow-sm">
+                                <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                                    class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                     <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
                                         aria-hidden="true">
                                         <path fill-rule="evenodd"
@@ -270,7 +269,8 @@
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah Kamu Yakin Mau mempublish
                         nya?</h3>
-                    <form action="">
+                    <form action="{{ route('publish') }}" method="POST">
+                        @csrf
                         <button type="submit"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                             Yes, I'm sure

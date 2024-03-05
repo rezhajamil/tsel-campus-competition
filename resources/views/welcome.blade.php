@@ -411,21 +411,26 @@
 </head>
 
 <body class="antialiased bg-[url('/images/bg-welcome.svg')] bg-no-repeat bg-cover">
-    <nav class="relative font-batik items-center border-b-2 border-red-500 w-full h-16 flex px-3 py-3 bg-white justify-between">
+    <nav
+        class="relative font-batik items-center border-b-2 border-red-500 w-full h-16 flex px-3 py-3 bg-white justify-between">
         <div class="flex gap-2">
-            <img src="https://seeklogo.com/images/T/telkomsel-logo-4EC1FC20C9-seeklogo.com.png" alt="" class="block h-10 w-auto fill-current">
-            <img src="https://logosmarcas.net/wp-content/uploads/2021/06/Telkomsel-Logo.png" alt="" class="hidden sm:block h-10 w-auto fill-current">    
+            <img src="https://seeklogo.com/images/T/telkomsel-logo-4EC1FC20C9-seeklogo.com.png" alt=""
+                class="block h-10 w-auto fill-current">
+            <img src="https://logosmarcas.net/wp-content/uploads/2021/06/Telkomsel-Logo.png" alt=""
+                class="hidden sm:block h-10 w-auto fill-current">
         </div>
-        <div class=" text-md sm:text-2xl text-red-600">Telkomsel Campus Competition</div>
-        <div>        
-            <img src="https://iconape.com/wp-content/png_logo_vector/byu-logo-blue.png" alt="" class="block h-10 w-auto fill-current">
+        <div class=" text-md sm:text-2xl text-red-600 sm:block hidden">by.U Goes To Campus</div>
+        <div class=" text-md sm:text-2xl text-red-600 sm:hidden block">BAGUS</div>
+        <div>
+            <img src="https://iconape.com/wp-content/png_logo_vector/byu-logo-blue.png" alt=""
+                class="block h-10 w-auto fill-current">
         </div>
     </nav>
     <main class="relative min-h-screen flex justify-center sm:items-center py-4 sm:pt-0 flex-col">
         <div class="max-w-6xl lg:w-4/5 grid lg:grid-cols-2 sm:grid-cols-1 sm:mx-auto gap-2 mx-10">
             <div
-                class="border rounded border-red-500 w-100 h-80 bg-red-600 relative md:h-lvw sm:h-svw overflow-hidden my-6">
-                Foto
+                class="border rounded border-red-500 w-fit h-fit bg-red-600 relative md:h-lvw sm:h-svw overflow-hidden my-6">
+                <img src="https://th.bing.com/th/id/OIP.to4sk2-s8BtH848mub21yAHaE8?rs=1&pid=ImgDetMain" alt="">
             </div>
             <div
                 class="w-100 flex flex-col items-center justify-center sm:mx-auto px-4 relative md:h-lvw sm:h-lvw overflow-hidden">
@@ -437,16 +442,20 @@
                             <a href="{{ url('/dashboard') }}"
                                 class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                         @else
-                            <buttton
-                                class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik">
-                                <a href="{{ route('login') }}" class="text-sm">Log in</a>
-                            </buttton>
+                            <a href="{{ route('login') }}" class="text-sm">
+                                <buttton
+                                    class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">
+                                    Log in
+                                </buttton>
+                            </a>
 
                             @if (Route::has('register'))
-                                <buttton
-                                    class="border-2 rounded-lg border-white m-6 w-28 flex justify-center h-10 items-center bg-red-600 text-white font-batik">
-                                    <a href="{{ route('register') }}" class="text-sm">Register</a>
-                                </buttton>
+                                <a href="{{ route('register') }}" class="text-sm">
+                                    <buttton
+                                        class="border-2 rounded-lg border-white m-6 w-28 flex justify-center h-10 items-center bg-red-600 text-white font-batik hover:bg-white hover:text-red-600">
+                                        Register
+                                    </buttton>
+                                </a>
                             @endif
                         @endauth
                     @endif
@@ -454,7 +463,7 @@
             </div>
         </div>
     </main>
-    <footer class="flex justify-center bg-red-600 text-white">asdasd</footer>
+    <footer class="flex justify-center bg-red-600 text-white">@ Bagus 2024</footer>
 </body>
 
 </html>

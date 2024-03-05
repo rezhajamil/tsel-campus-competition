@@ -10,7 +10,8 @@
             </a>
         </div>
         <div class="flex items-center justify-center text-center">
-            <span class="font-batik text-sm sm:text-2xl text-red-600 ">Telkomsel Campus Competition</span>
+            <span class="font-batik text-2xl text-red-600 sm:block hidden">by.U Goes To Campus</span>
+            <span class="font-batik text-xl  text-red-600 sm:hidden block">BAGUS</span>
         </div>
         <div class="flex items-center justify-center">
             <div class="hidden sm:flex sm:items-center sm:ml-6">
