@@ -59,5 +59,10 @@ class User extends Authenticatable
             'telp.regex' => 'Nomor telepon harus memiliki 3 angka di depan.'
         ]);
     }
+
+    public function activeOTP()
+    {
+        return $this->hasOne(UserOTP::class,'user_id')->where('expired_at','>', 'now()');
+    }
 }
 

@@ -64,7 +64,7 @@ class PesertaController extends Controller
 
 
         // Memeriksa apakah jumlah anggota sudah mencapai batas maksimum (5)
-        if ($jumlahAnggota <= 5) {
+        if ($jumlahAnggota <= 4) {
             Peserta::create($request->all());
             return redirect('/dashboard/model-bisnis')->with('success', 'Data berhasil disimpan.');
         } else {

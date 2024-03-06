@@ -1,11 +1,20 @@
 <?php
 
+use App\Models\User;
+use App\Models\UserOTP;
 use App\Models\Datadiri;
+use App\Models\Pendaftaran;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Route;
+use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\KampusController;
+use App\Notifications\SendOTPNotification;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DatadiriController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeBisnisController;
 
 /*
@@ -22,17 +31,39 @@ use App\Http\Controllers\IdeBisnisController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/{user_id}/otp-verification', function ($user_id) {
+    $user = User::find($user_id);
+    return view('otp', compact('user'));
+})->name('otp-verification');
+
+Route::post('/{user_id}/otp-verification/resend-otp', function ($user_id) {
+
+    $otp = UserOTP::where('user_id', $user_id)->first();
+    $otp->otp_code = rand(100000, 999999);
+    $otp->expired_at = Date::now()->addMinutes(5);
+    $otp->save();
+    $otp->user->notify(new SendOTPNotification($otp->otp_code));
+    return redirect()->route('otp-verification', $otp->user_id);
+})->name('resend-otp');
+
+Route::post('/{user_id}/otp-validation', function ($user_id, Request $request) {
+    $otp = UserOTP::where('otp_code', $request->otp_code)->where('expired_at', '>', now())->first();
+    if (!$otp) {
+        return back()->withErrors(
+            'otp_code',
+            'OTP CODE tidak ditemukan.'
+        );
+    }
+    $otp->user->email_verified_at = Date::now();
+    $otp->user->save();
+    Auth::login($otp->user);
+    return redirect(RouteServiceProvider::HOME);
+})->name('otp.validation');
 
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    Route::get('/dashboard/myproject', function () {
-        return view('user.myproject.myproject');
-    })->name('myproject');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/myproject/create-kelompok', function () {
         return view('user.myproject.create-kelompok');
@@ -52,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     //project
     Route::get('/myproject', [ProjectController::class, 'my_project'])->name('my_project');
     Route::get('/myproject/proposal/{id_proposal}', [PesertaController::class, 'index'])->name('model-bisnis');
-    Route::post('/myproject/publish',[ProjectController::class, 'publish'])->name('publish');
+    Route::post('/myproject/publish', [ProjectController::class, 'publish'])->name('publish');
 
     //kelompok
     Route::get('/create-project/kelompok', function () {
@@ -66,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //proposal
     Route::get('/proposal/form-ide-bisnis', [ProjectController::class, 'ide_bisnis'])->name('ide-bisnis');
-    Route::post('/proposal/form-ide-bisnis/input',[ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
+    Route::post('/proposal/form-ide-bisnis/input', [ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
     Route::get('/proposal/form-laba-rugi', [ProjectController::class, 'laba_rugi'])->name('laba-rugi');
     Route::post('/proposal/form-laba-rugi/input', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
     Route::get('/proposal/form-pemasaran', [ProjectController::class, 'pemasaran'])->name('pemasaran');

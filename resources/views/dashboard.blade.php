@@ -5,8 +5,8 @@
         <div>
             <div class="hidden sm:block max-w-full w-fit col-start-1 col-end-2 sm:px-6 lg:px-8">
                 <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm bg-white">
-                    <nav class="grid grid-flow-row grid-rows-8 px-3 py-5 h-screen">
-                        <div class=" row-span-7 px-3 py-5">
+                    <nav class="grid grid-flow-row grid-rows-4 px-3 py-5 h-screen">
+                        <div class=" row-span-3 px-3 py-5 relative">
                             <div>
                                 <div class="font-medium text-base text-gray-800 uppercase">{{ Auth::user()->name }}</div>
                                 <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
@@ -38,16 +38,19 @@
                                 Project</a>
                         </div>
                         
-                        <div class="">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                        this.closest('form').submit();"
-                                    class="text-red-600 font-bold border-2 border-red-600 hover:bg-red-600 hover:text-white rounded-md text-sm flex justify-center p-2">
-                                    {{ __('Log Out') }}
-                                </a>
-                            </form>
+                        <div class="relative ">
+                            <div class="absolute inset-x-0 bottom-0 ">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                            this.closest('form').submit();"
+                                        class="text-red-600 font-bold border-2 border-red-600 hover:bg-red-600 hover:text-white rounded-md text-sm flex justify-center p-2">
+                                        {{ __('Log Out') }}
+                                    </a>
+                                </form>
+                            </div>
+                            
                         </div>
                     </nav>
                 </div>

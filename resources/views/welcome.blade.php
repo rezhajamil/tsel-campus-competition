@@ -429,7 +429,7 @@
     <main class="relative min-h-screen flex justify-center sm:items-center py-4 sm:pt-0 flex-col">
         <div class="max-w-6xl lg:w-4/5 grid lg:grid-cols-2 sm:grid-cols-1 sm:mx-auto gap-2 mx-10">
             <div
-                class="border rounded border-red-500 w-fit h-fit bg-red-600 relative md:h-lvw sm:h-svw overflow-hidden my-6">
+                class="rounded w-fit h-fit relative md:h-lvw sm:h-svw overflow-hidden my-6">
                 <img src="https://th.bing.com/th/id/OIP.to4sk2-s8BtH848mub21yAHaE8?rs=1&pid=ImgDetMain" alt="">
             </div>
             <div
@@ -440,7 +440,7 @@
                     @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/dashboard') }}"
-                                class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                                class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="text-sm">
                                 <buttton

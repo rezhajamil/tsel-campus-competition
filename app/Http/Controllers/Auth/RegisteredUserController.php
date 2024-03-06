@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
+use App\Models\UserOTP;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -82,13 +84,12 @@ class RegisteredUserController extends Controller
             'role' => 'Peserta', // Peran default 'peserta'
         ]);
 
-        // Panggil event Registered untuk menandakan bahwa user telah terdaftar
+        UserOTP::create([
+            'user_id' => $user->user_id,
+            'otp_code' => rand(100000,999999),
+            'expired_at' => Date::now()->addMinutes(5)
+        ]);
         event(new Registered($user));
-
-        // Autentikasi user yang baru terdaftar
-        Auth::login($user);
-
-        // Redirect ke home setelah berhasil terdaftar
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('otp-verification', $user->user_id);
     }
 }
