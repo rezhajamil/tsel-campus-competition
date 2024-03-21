@@ -20,6 +20,7 @@ class AuthenticatedSessionController extends Controller
      {
          return view('auth.login');
      }
+
     public function loginByPhone(Request $request)
     {
         $request->validate([
@@ -31,7 +32,8 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt(['telp' => $request->telp, 'password' => $request->password], $request->remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            // Redirect user based on their role
+            return $this->redirectBasedOnRole();
         }
 
         // If authentication fails, redirect back with error message
@@ -57,7 +59,8 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt(['telp' => $request->telp, 'password' => $request->password], $request->remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            // Redirect user based on their role
+            return $this->redirectBasedOnRole();
         }
 
         // If authentication fails, redirect back with error message
@@ -81,5 +84,19 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Redirect user based on their role.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectBasedOnRole()
+    {
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('dashboard-admin');
+        }
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
