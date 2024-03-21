@@ -40,6 +40,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'telp' => ['required', 'unique:users']
         ]);
 
         // Mengambil kode prefix untuk operator Telkomsel dari tabel kode_prefix_operator
@@ -84,12 +85,20 @@ class RegisteredUserController extends Controller
             'role' => 'Peserta', // Peran default 'peserta'
         ]);
 
-        UserOTP::create([
-            'user_id' => $user->user_id,
-            'otp_code' => rand(100000,999999),
-            'expired_at' => Date::now()->addMinutes(5)
-        ]);
-        event(new Registered($user));
-        return redirect()->route('otp-verification', $user->user_id);
+         // Panggil event Registered untuk menandakan bahwa user telah terdaftar
+         event(new Registered($user));
+
+         // Autentikasi user yang baru terdaftar
+         Auth::login($user);
+ 
+         // Redirect ke home setelah berhasil terdaftar
+         return redirect(RouteServiceProvider::HOME);
+        // UserOTP::create([
+        //     'user_id' => $user->user_id,
+        //     'otp_code' => rand(100000,999999),
+        //     'expired_at' => Date::now()->addMinutes(5)
+        // ]);
+        // event(new Registered($user));
+        // return redirect()->route('otp-verification', $user->user_id);
     }
 }

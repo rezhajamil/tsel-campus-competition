@@ -26,6 +26,8 @@ class DashboardController extends Controller
         $decline = $pendaftaran->where('status', 'Ditolak')->count();
         $seleksi = $pendaftaran->where('status', 'Seleksi')->count();
 
+
+
         return view('dashboard-user', [
             'pendaftaran' => $pendaftaran,
             'accepted' => $accepted,
@@ -34,4 +36,9 @@ class DashboardController extends Controller
             'anggota' => $jumlahAnggota,
         ]);
     }
+
+    public function kelompok(){
+        return view('user.myproject.create-kelompok');
+    }
+
 }

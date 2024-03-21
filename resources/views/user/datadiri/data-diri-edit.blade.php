@@ -43,8 +43,13 @@
                                 </div>
                                 <div class="mt-3">
                                     <x-label for="email" :value="__('Email')"></x-label>
+                                    @if (Auth::user()->email_verified_at)    
                                     <x-input id="email" class=" block mt-1 w-full" type="email" name="email"
-                                    value="{{ $data->email }}" required></x-input>
+                                    value="{{ $data->email }}" disabled></x-input>
+                                    @else
+                                    <x-input id="email" class=" block mt-1 w-full" type="email" name="email"
+                                    value="{{ $data->email }}"></x-input>
+                                    @endif
                                 </div>
                             </div>
                         </div>
