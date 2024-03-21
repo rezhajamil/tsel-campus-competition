@@ -37,7 +37,7 @@
                                 </svg>
                                 Project</a>
                         </div>
-                        
+
                         <div class="">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
