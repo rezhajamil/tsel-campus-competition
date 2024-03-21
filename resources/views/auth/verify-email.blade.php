@@ -1,6 +1,4 @@
-@extends('dashboard')
-
-@section('content')
+<x-app-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -31,4 +29,4 @@
 
         </div>
     </x-auth-card>
-@endsection
+</x-app-layout>

@@ -27,29 +27,4 @@ class DatadiriController extends Controller
 
     }
     
-    public function index(Request $request){
-        $routeName = $request->route()->getName();
-
-        // Menentukan nilai $page berdasarkan nama route
-        $page = '';
-        if ($routeName === 'data-diri') {
-            $page = 'datadiri.data-diri';
-        } elseif ($routeName === 'data-diri-edit') {
-            $page = 'datadiri.data-diri-edit';
-        } elseif ($routeName === 'myproject') {
-            $page = 'myproject.myproject';
-        }elseif ($routeName === 'create.index') {
-            $page = 'myproject.create-kelompok';
-        }// Anda bisa tambahkan kondisi lain sesuai kebutuhan
-    
-        // Mendapatkan ID pengguna yang sedang login
-        $userId = Auth::user()->user_id;
-    
-        // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
-        $datadiri = User::where('user_id', $userId)->get();
-        
-        // Mengembalikan view dengan data user
-        return view('user.'.$page, ['datadiri' => $datadiri]);
-
-    }
 }

@@ -85,12 +85,12 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'admin'],
 });
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'checkRole:Peserta'], 'prefix' => 'Peserta'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //datadiri
-    Route::get('/dashboard/data-diri', [DatadiriController::class, 'index'])->name('data-diri');
-    Route::get('/data-diri/edit', [DatadiriController::class, 'index'])->name('data-diri-edit');
+    Route::get('/dashboard/data-diri', [DashboardController::class, 'datadiri'])->name('data-diri');
+    Route::get('/data-diri/edit', [DashboardController::class, 'datadiri'])->name('data-diri-edit');
     Route::post('/dashboard/data-diri/edit', [DatadiriController::class, 'create'])->name('data-diri.update');
     Route::get('/get-kampus-by-keyword', [KampusController::class, 'getKampusByKeyword'])->name('get-kampus-by-keyword');
 
@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/myproject/create-kelompok', [DashboardController::class, 'kelompok'])->name('kelompok');
 
         //project
-        Route::get('/myproject', [ProjectController::class, 'my_project'])->name('my_project');
+        Route::get('/myproject', [DashboardController::class, 'my_project'])->name('my_project');
         Route::get('/myproject/proposal/{id_proposal}', [PesertaController::class, 'index'])->name('model-bisnis');
         Route::post('/myproject/publish', [ProjectController::class, 'publish'])->name('publish');
 

@@ -12,43 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
 
-    //view all in my project
-    public function my_project()
-    {
-        $userId = auth::user()->user_id;
-        $pendaftaran = Pendaftaran::with(['user', 'kelompok', 'proposal'])
-            ->where('user_id', $userId)
-            ->get();
-        $jumlahAnggota = Peserta::where('user_id', $userId)->count();
-
-        // Mendapatkan proposal terkait dengan pengguna yang masuk
-        $proposal = Proposal::whereHas('user', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->first();
-
-        // Periksa jika proposal ditemukan
-        if ($proposal) {
-            $adaKolomKosong = empty($proposal->ide_bisnis) ||
-                empty($proposal->model_bisnis_canvas) ||
-                empty($proposal->deskripsi_laba_rugi) ||
-                empty($proposal->file_laba_rugi) ||
-                empty($proposal->file_pemasaran) ||
-                empty($proposal->deskripsi_pemasaran) ||
-                empty($proposal->deskripsi_maintenance) ||
-                empty($proposal->file_maintenance);
-        } else {
-            // Jika proposal tidak ditemukan, tandai sebagai memiliki kolom kosong
-            $adaKolomKosong = true;
-        }
-
-        return view('/user/myproject/myproject', [
-            'pendaftaran' => $pendaftaran,
-            'anggota' => $jumlahAnggota,
-            'adaKolomKosong' => $adaKolomKosong,
-        ]);
-    }
-
-
     //form input
     public function ide_bisnis(Request $request)
     {
