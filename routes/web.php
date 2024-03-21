@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dashboard/data-diri/edit', [DatadiriController::class, 'create'])->name('data-diri.update');
     Route::get('/get-kampus-by-keyword', [KampusController::class, 'getKampusByKeyword'])->name('get-kampus-by-keyword');
 
-    // Route::middleware(['verified'])->group(function () {
+    Route::middleware(['verified'])->group(function () {
         Route::get('/myproject/create-kelompok', [DashboardController::class, 'kelompok'])->name('kelompok');
 
         //project
@@ -77,9 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/myproject/publish', [ProjectController::class, 'publish'])->name('publish');
 
         //kelompok
-        Route::get('/create-project/kelompok', function () {
-            return view('user.myproject.create-kelompok');
-        })->name('nama_kelompok');
+        Route::get('/create-project/kelompok', [ProjectController::class,'nama_kelompok'])->name('nama_kelompok');
         Route::post('/create-project/create-kelompok', [ProjectController::class, 'create_kelompok'])->name('create_kelompok');
 
         //anggota
@@ -97,7 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/proposal/form-maintenance/input', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
 
         Route::get('/model-bisnis/create-tim', [PesertaController::class, 'index'])->name('create.index');
-    // });
+    });
 });
 
 require __DIR__ . '/auth.php';

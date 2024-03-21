@@ -93,6 +93,9 @@ class ProjectController extends Controller
     }
 
     //kelompok
+    public function nama_kelompok(){
+        return view('user.myproject.create-kelompok');
+    }
     public function create_kelompok(Request $request)
     {
         $request->validate([
