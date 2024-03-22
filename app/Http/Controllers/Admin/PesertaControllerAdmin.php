@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Peserta;
-use App\Models\Kelompok; 
+use App\Models\Kelompok;
 class PesertaControllerAdmin extends Controller
 {
     /**
@@ -17,14 +17,14 @@ class PesertaControllerAdmin extends Controller
     {
         // Mengambil semua kelompok
         $kelompoks = Kelompok::all();
-    
+
         $query = Peserta::query();
-    
+
         // Filter berdasarkan kelompok jika ada
         if ($request->filled('kelompok')) {
             $query->where('nama_kelompok', $request->kelompok);
         }
-    
+
         // Pencarian
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -34,11 +34,11 @@ class PesertaControllerAdmin extends Controller
                     ->orWhere('nim', 'like', "%$search%");
             });
         }
-    
+
         $pesertas = $query->paginate(10);
         return view('admin.Pesertas.index', compact('pesertas', 'kelompoks'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -116,8 +116,8 @@ class PesertaControllerAdmin extends Controller
         return redirect()->route('admin.Pesertas.index')
             ->with('success', 'Peserta updated successfully.');
     }
-    
-    
+
+
 
     /**
      * Remove the specified resource from storage.
