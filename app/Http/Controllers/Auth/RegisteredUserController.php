@@ -85,14 +85,14 @@ class RegisteredUserController extends Controller
             'role' => 'Peserta', // Peran default 'peserta'
         ]);
 
-         // Panggil event Registered untuk menandakan bahwa user telah terdaftar
-         event(new Registered($user));
+        // Panggil event Registered untuk menandakan bahwa user telah terdaftar
+        event(new Registered($user));
 
-         // Autentikasi user yang baru terdaftar
-         Auth::login($user);
- 
-         // Redirect ke home setelah berhasil terdaftar
-         return redirect(RouteServiceProvider::HOME);
+        // Autentikasi user yang baru terdaftar
+        Auth::login($user);
+
+        // Redirect ke home setelah berhasil terdaftar
+        return $this->redirectBasedOnRole();
         // UserOTP::create([
         //     'user_id' => $user->user_id,
         //     'otp_code' => rand(100000,999999),
@@ -100,5 +100,16 @@ class RegisteredUserController extends Controller
         // ]);
         // event(new Registered($user));
         // return redirect()->route('otp-verification', $user->user_id);
+    }
+
+    protected function redirectBasedOnRole()
+    {
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('dashboard-admin');
+        }else if(Auth::user()->role === 'Peserta'){
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }
