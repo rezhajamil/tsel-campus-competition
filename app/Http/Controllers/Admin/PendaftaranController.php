@@ -3,132 +3,91 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Models\Pendaftaran;
+use App\Models\Proposal;
+use App\Models\Peserta;
 
 class PendaftaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    // Menampilkan semua data pendaftaran
+    public function index()
     {
-        // Retrieve all pendaftaran
-        $pendaftarans = Pendaftaran::paginate(10);
-        
-        return view('admin.pendaftarans.index', compact('pendaftarans'));
+        // Menghitung jumlah pendaftaran
+        $jumlah_pendaftaran = Pendaftaran::count();
+
+        // Menghitung jumlah peserta
+        $jumlah_peserta = Peserta::count();
+
+        // Menghitung jumlah proposal dengan status "Publish"
+        $jumlah_publish = Proposal::where('status', 'Publish')->count();
+
+        // Menghitung jumlah proposal dengan status "Proses"
+        $jumlah_proses = Proposal::where('status', 'Proses')->count();
+
+        // Mengambil semua data pendaftaran
+        $pendaftarans = Pendaftaran::all();
+
+        return view('dashboard-admin2', compact('pendaftarans', 'jumlah_pendaftaran', 'jumlah_peserta', 'jumlah_publish', 'jumlah_proses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Menampilkan form untuk membuat pendaftaran baru
     public function create()
     {
-        return view('admin.pendaftarans.create');
+        // Jika diperlukan, Anda dapat menambahkan logika untuk menyiapkan form di sini
+        return view('create-pendaftaran');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Menyimpan pendaftaran baru ke dalam database
     public function store(Request $request)
     {
         $request->validate([
-            // Add validation rules here based on your requirements
+            'user_id' => 'required',
+            'kelompok_id' => 'required',
+            'proposal_id' => 'required',
+            'status' => 'required',
         ]);
 
         Pendaftaran::create($request->all());
 
-        return redirect()->route('admin.pendaftarans.index')
-            ->with('success', 'Pendaftaran created successfully.');
+        return redirect()->route('pendaftarans.index')
+                         ->with('success', 'Pendaftaran berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
+    // Menampilkan data pendaftaran yang dipilih
     public function show(Pendaftaran $pendaftaran)
     {
-        return view('admin.pendaftarans.show', compact('pendaftaran'));
+        return view('show-pendaftaran', compact('pendaftaran'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
+    // Menampilkan form untuk mengedit data pendaftaran
     public function edit(Pendaftaran $pendaftaran)
     {
-        return view('admin.pendaftarans.edit', compact('pendaftaran'));
+        return view('edit-pendaftaran', compact('pendaftaran'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,  $id_pendaftaran)
+    // Memperbarui data pendaftaran yang dipilih di database
+    public function update(Request $request, Pendaftaran $pendaftaran)
     {
         $request->validate([
-            // Add validation rules here based on your requirements
+            'user_id' => 'required',
+            'kelompok_id' => 'required',
+            'proposal_id' => 'required',
+            'status' => 'required',
         ]);
 
-        $pendaftaran = Pendaftaran::where('id', $id_pendaftaran)->firstOrFail();
         $pendaftaran->update($request->all());
 
-        return redirect()->route('admin.pendaftarans.index')
-            ->with('success', 'Pendaftaran updated successfully.');
+        return redirect()->route('pendaftarans.index')
+                         ->with('success', 'Pendaftaran berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pendaftaran  $pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id_pendaftaran)
+    // Menghapus data pendaftaran yang dipilih dari database
+    public function destroy(Pendaftaran $pendaftaran)
     {
-        try {
-            // Delete Pendaftaran
-            Pendaftaran::findOrFail($id_pendaftaran)->delete();
+        $pendaftaran->delete();
 
-            return redirect()->route('admin.pendaftarans.index')
-                ->with('success', 'Pendaftaran deleted successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Failed to delete pendaftaran. Error: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Update the status of the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id_pendaftaran
-     * @return \Illuminate\Http\Response
-     */
-    public function updateStatus(Request $request, $id_pendaftaran)
-    {
-        $request->validate([
-            'status' => 'required|in:Approved,Rejected',
-        ]);
-
-        $pendaftaran = Pendaftaran::findOrFail($id_pendaftaran);
-        $pendaftaran->status = $request->status;
-        $pendaftaran->save();
-
-        return redirect()->route('admin.pendaftarans.index')
-            ->with('success', 'Pendaftaran status updated successfully.');
+        return redirect()->route('pendaftarans.index')
+                         ->with('success', 'Pendaftaran berhasil dihapus.');
     }
 }

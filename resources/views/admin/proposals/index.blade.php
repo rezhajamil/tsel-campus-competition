@@ -57,8 +57,8 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model Bisnis Canvas</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi Laba Rugi</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Laba Rugi</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Pemasaran</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi Pemasaran</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Pemasaran</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi Maintenance</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Maintenance</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -71,26 +71,48 @@
                         @foreach($proposals as $index => $proposal)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $index + 1 }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->user->name }}</td> 
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->user->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->kelompok->nama_kelompok }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->judul_proposal }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->ide_bisnis }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->model_bisnis_canvas }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form action="{{ asset('storage/model_bisnis_canvas/' . $proposal->model_bisnis_canvas) }}" method="GET" class="inline">
+                                        <button type="submit" class="text-indigo-600 hover:text-indigo-900">{{ $proposal->model_bisnis_canvas }}</button>
+                                    </form>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->deskripsi_laba_rugi }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->file_laba_rugi }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->file_pemasaran }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form action="{{ asset('storage/file_laba_rugi/' . $proposal->file_laba_rugi) }}" method="GET" class="inline">
+                                        <button type="submit" class="text-indigo-600 hover:text-indigo-900">{{ $proposal->file_laba_rugi }}</button>
+                                    </form>
+                                </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->deskripsi_pemasaran }}</td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form action="{{ asset('storage/file_pemasaran/' . $proposal->file_pemasaran) }}" method="GET" class="inline">
+                                        <button type="submit" class="text-indigo-600 hover:text-indigo-900">{{ $proposal->file_pemasaran }}</button>
+                                    </form>
+                                </td>
+
+
+
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->deskripsi_maintenance }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->file_maintenance }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form action="{{ asset('storage/file_maintenance/' . $proposal->file_maintenance) }}" method="GET" class="inline">
+                                        <button type="submit" class="text-indigo-600 hover:text-indigo-900">{{ $proposal->file_maintenance }}</button>
+                                    </form>
+                                </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->status }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->updated_at }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <a href="{{ route('admin.proposals.edit', $proposal->id_proposal) }}" class="text-indigo-600 hover:text-indigo-900">Detail</a>
-                                    <form action="{{ route('admin.proposals.destroy', $proposal->id_proposal) }}" method="POST" class="inline">
+                                    {{-- <form action="{{ route('admin.proposals.destroy', $proposal->id_proposal) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Delete</button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <form action="{{ route('admin.proposals.updateStatus', $proposal->id_proposal) }}" method="POST" class="inline">
@@ -106,7 +128,7 @@
                                         <button type="submit" class="text-red-600 hover:text-red-900 ml-2">Reject</button>
                                     </form>
                                 </td>
-                                
+
                             </tr>
                         @endforeach
                     </tbody>

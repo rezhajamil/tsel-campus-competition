@@ -13,7 +13,7 @@
                                 <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
                             </div>
                             <h1 class=" font-bold text-2xl border-b-2 border-indigo-900">MENU</h1>
-                            <a href="{{ route('dashboard-admin') }}"
+                            <a href="{{ route('dashboard-admin2') }}"
                                 class="text-sm flex justify-start items-center mt-5 {{ request()->routeIs('dashboard') ? 'text-indigo-900 font-bold' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
@@ -21,20 +21,6 @@
                                         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                 </svg>
                                 Dashboard</a>
-                            <a href="{{ route('admin.pendaftarans.index') }}"
-                                class="text-sm flex justify-start items-center mt-3 {{ request()->routeIs('admin.pendaftarans.index') ? 'text-indigo-900 font-bold' : '' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M19 16C19 18.8284 19 20.2426 18.1213 21.1213C17.2426 22 15.8284 22 13 22H11C8.17157 22 6.75736 22 5.87868 21.1213C5 20.2426 5 18.8284 5 16V12M5 8C5 5.17157 5 3.75736 5.87868 2.87868C6.75736 2 8.17157 2 11 2H13C15.8284 2 17.2426 2 18.1213 2.87868C19 3.75736 19 5.17157 19 8V12" />
-                                    <path
-                                        d="M19 4.07617C19.9751 4.17208 20.6314 4.38885 21.1213 4.87873C22 5.75741 22 7.17163 22 10.0001V14.0001C22 16.8285 22 18.2427 21.1213 19.1214C20.6314 19.6113 19.9751 19.828 19 19.9239" />
-                                    <path d="M9 13H15" />
-                                    <path d="M9 9H15" />
-                                    <path d="M9 17H12" />
-                                </svg>
-                                Pendaftaran
-                            </a>
 
                             <a href="{{ route('admin.users.index') }}"
                                 class="text-sm flex justify-start items-center mt-3 {{ request()->routeIs('admin.users.index') ? 'text-indigo-900 font-bold' : '' }}">
@@ -63,7 +49,7 @@
                                     </g>
                                 </svg>
                                 Proposal</a>
-                            
+
                                 <a href="{{ route('admin.timelines.index') }}" class="text-sm flex justify-start items-center mt-3 {{ request()->routeIs('admin.timelines.index') ? 'text-indigo-900 font-bold' : '' }}">
                                     <!-- Ganti dengan ikon SVG yang baru -->
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-1.5 h-5 w-5">
@@ -77,7 +63,7 @@
                                     </svg>
                                     Time line
                                 </a>
-                                
+
 
                         </div>
 

@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'admin'],
         return view('dashboard-admin');
     })->name('dashboard-admin');
 
+    Route::get('/dashboard-admin2', [PendaftaranController::class, 'index'])->name('dashboard-admin2');
+
     // User Routes
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -65,15 +67,15 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'admin'],
     Route::delete('/proposals/{proposal}', [ProposalController::class, 'destroy'])->name('admin.proposals.destroy');
     Route::put('proposals/{id_proposal}/update-status', [ProposalController::class, 'updateStatus'])->name('admin.proposals.updateStatus');
 
-    // Routes for Pendaftaran
-    Route::get('/pendaftarans', [PendaftaranController::class, 'index'])->name('admin.pendaftarans.index');
+    Route::get('/pendaftarans', [PendaftaranController::class, 'index'])->name('dashboard-admin');
     Route::get('/pendaftarans/create', [PendaftaranController::class, 'create'])->name('admin.pendaftarans.create');
     Route::post('/pendaftarans', [PendaftaranController::class, 'store'])->name('admin.pendaftarans.store');
     Route::get('/pendaftarans/{pendaftaran}', [PendaftaranController::class, 'show'])->name('admin.pendaftarans.show');
     Route::get('/pendaftarans/{pendaftaran}/edit', [PendaftaranController::class, 'edit'])->name('admin.pendaftarans.edit');
     Route::put('/pendaftarans/{pendaftaran}', [PendaftaranController::class, 'update'])->name('admin.pendaftarans.update');
     Route::delete('/pendaftarans/{pendaftaran}', [PendaftaranController::class, 'destroy'])->name('admin.pendaftarans.destroy');
-    Route::put('/pendaftarans/{pendaftaran}/update-status', [PendaftaranController::class, 'updateStatus'])->name('admin.pendaftarans.updateStatus');
+
+
 
     Route::get('/timelines', [TimelineController::class, 'index'])->name('admin.timelines.index');
     Route::get('/timelines/create', [TimelineController::class, 'create'])->name('admin.timelines.create');
