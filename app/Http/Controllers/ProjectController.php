@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peserta;
 use App\Models\Kelompok;
 use App\Models\Proposal;
+use App\Models\Timeline;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,8 @@ class ProjectController extends Controller
 
     //kelompok
     public function nama_kelompok(){
-        return view('user.myproject.create-kelompok');
+        $timeline = Timeline::all();
+        return view('user.myproject.create-kelompok',[ 'timelines' => $timeline]); 
     }
     public function create_kelompok(Request $request)
     {
@@ -101,7 +103,7 @@ class ProjectController extends Controller
 
             // Tambahkan kolom lain yang sesuai dengan kebutuhan Anda
         ]);
-        return redirect('/dashboard/myproject')->with('error', 'Nama Kelompok sudah ada');
+        return redirect()->route('my_project')->with('error', 'Nama Kelompok sudah ada');
     }
 
     public function kelompok()
@@ -156,11 +158,11 @@ class ProjectController extends Controller
 
         foreach ($proposal as $data) {
             // Memeriksa apakah jumlah anggota sudah mencapai batas maksimum (5)
-            if ($jumlahAnggota <= 5) {
+            if ($jumlahAnggota <= 4) {
                 Peserta::create($request->all());
-                return redirect('/myproject/proposal/' . $data->id_proposal)->with('success', 'Data berhasil disimpan.');
+                return redirect()->route('model-bisnis',$data->id_proposal)->with('success', 'Data berhasil disimpan.');
             } else {
-                return redirect('/myproject/proposal/' . $data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
+                return redirect()->route('model-bisnis',$data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
             }
         }
     }
