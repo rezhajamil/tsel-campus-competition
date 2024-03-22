@@ -23,7 +23,7 @@ class DatadiriController extends Controller
         $peserta->update($request->all());
     
         // 5. Redirect pengguna ke halaman yang sesuai setelah berhasil melakukan update
-        return redirect('/dashboard/data-diri')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('data-diri')->with('success', 'Data berhasil diperbarui.');
 
     }
     

@@ -428,8 +428,7 @@
     </nav>
     <main class="relative min-h-screen flex justify-center sm:items-center py-4 sm:pt-0 flex-col">
         <div class="max-w-6xl lg:w-4/5 grid lg:grid-cols-2 sm:grid-cols-1 sm:mx-auto gap-2 mx-10">
-            <div
-                class="rounded w-fit h-fit relative md:h-lvw sm:h-svw overflow-hidden my-6">
+            <div class="rounded w-fit h-fit relative md:h-lvw sm:h-svw overflow-hidden my-6">
                 <img src="https://th.bing.com/th/id/OIP.to4sk2-s8BtH848mub21yAHaE8?rs=1&pid=ImgDetMain" alt="">
             </div>
             <div
@@ -439,8 +438,13 @@
                 <div class="flex justify-center">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}"
-                                class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">Dashboard</a>
+                            @if (Auth::user()->role == 'Peserta')
+                                <a href="{{ route('dashboard') }}"
+                                    class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">Dashboard</a>
+                            @else
+                                <a href="{{ route('dashboard-admin') }}"
+                                    class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">Dashboard</a>
+                            @endif
                         @else
                             <a href="{{ route('login') }}" class="text-sm">
                                 <buttton
