@@ -18,8 +18,7 @@ class CreateTimelineTable extends Migration
             $table->string('nama');
             $table->text('deskripsi')->nullable();
             $table->dateTime('waktu');
-            $table->dateTime('mulai');
-            $table->string('status')->default('pending');
+            $table->string('status');
             $table->timestamps();
         });
     }

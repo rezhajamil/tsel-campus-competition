@@ -24,18 +24,13 @@
 
                 <div class="mt-4">
                     <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu</label>
-                    <input type="datetime-local" name="waktu" id="waktu" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="mt-4">
-                    <label for="mulai" class="block text-sm font-medium text-gray-700">Mulai</label>
-                    <input type="datetime-local" name="mulai" id="mulai" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="date" name="waktu" id="waktu" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="mt-4">
                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                     <select name="status" id="status" required class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="Belum mulai">Belum Mulai</option>
+                        <option value="Belum Mulai">Belum Mulai</option>
                         <option value="Mulai">Mulai</option>
                         <option value="Selesai">Selesai</option>
                         <option value="Perpanjang">Perpanjang</option>

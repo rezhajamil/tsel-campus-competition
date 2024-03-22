@@ -36,7 +36,6 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waktu</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mulai</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th> <!-- Added Actions Column -->
                         </tr>
@@ -48,8 +47,24 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $timeline->nama }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $timeline->deskripsi }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $timeline->waktu }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $timeline->mulai }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $timeline->status }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @switch($timeline->status)
+                                        @case('Belum Mulai')
+                                            <span class="text-gray-900">Belum Mulai</span>
+                                            @break
+                                        @case('Mulai')
+                                            <span class="text-blue-600">Mulai</span>
+                                            @break
+                                        @case('Selesai')
+                                            <span class="text-green-600">Selesai</span>
+                                            @break
+                                        @case('Perpanjang')
+                                            <span class="text-orange-600">Perpanjang</span>
+                                            @break
+                                        @default
+                                            <span>{{ $timeline->status }}</span>
+                                    @endswitch
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <a href="{{ route('admin.timelines.edit', $timeline->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <form action="{{ route('admin.timelines.destroy', $timeline->id) }}" method="POST" class="inline">
@@ -57,7 +72,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900 ml-2" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
                                     </form>
-                                </td> 
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

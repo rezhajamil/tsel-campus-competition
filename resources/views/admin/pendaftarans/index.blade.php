@@ -28,7 +28,7 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelompok Name</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Proposal Judul</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -39,14 +39,14 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $pendaftaran->kelompok->nama_kelompok }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $pendaftaran->proposal->judul_proposal }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $pendaftaran->status }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            {{-- <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="{{ route('admin.pendaftarans.edit', $pendaftaran->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 <form action="{{ route('admin.pendaftarans.destroy', $pendaftaran->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Delete</button>
                                 </form>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

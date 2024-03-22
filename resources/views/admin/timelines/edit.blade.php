@@ -24,10 +24,6 @@
                 <input type="datetime-local" name="waktu" id="waktu" class="form-input rounded-md w-full" value="{{ $timeline->waktu->format('Y-m-d\TH:i') }}">
             </div>
             <div class="mt-4">
-                <label for="mulai" class="block">Mulai:</label>
-                <input type="datetime-local" name="mulai" id="mulai" class="form-input rounded-md w-full" value="{{ $timeline->mulai->format('Y-m-d\TH:i') }}">
-            </div>
-            <div class="mt-4">
                 <label for="status" class="block">Status:</label>
                 <select name="status" id="status" class="form-select rounded-md w-full">
                     <option value="Belum Mulai" {{ $timeline->status == 'Belum Mulai' ? 'selected' : '' }}>Belum Mulai</option>

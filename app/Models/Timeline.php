@@ -25,7 +25,6 @@ class Timeline extends Model
         'nama',
         'deskripsi',
         'waktu',
-        'mulai',
         'status',
     ];
 
@@ -35,7 +34,6 @@ class Timeline extends Model
      * @var array
      */
     protected $casts = [
-        'waktu' => 'datetime',
-        'mulai' => 'datetime',
+        'waktu' => 'datetime'
     ];
 }

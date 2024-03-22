@@ -439,7 +439,7 @@
                 <div class="flex justify-center">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}"
+                            <a href="{{ route('dashboard') }}"
                                 class="border-2 rounded-lg border-red-600 m-6 w-28 flex justify-center h-10 items-center bg-white text-red-600 font-batik hover:bg-red-600 hover:text-white">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="text-sm">
