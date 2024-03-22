@@ -10,7 +10,7 @@
             @foreach ($timelines as $timeline)
                 @php
                     // Hitung perbedaan waktu relatif
-                    $diffForHumans = Carbon\Carbon::parse($timeline->mulai)->diffForHumans();
+                    $diffForHumans = Carbon\Carbon::parse($timeline->waktu)->diffForHumans();
                 @endphp
                 @if ($timeline->status == 'Belum mulai')
                     <li class="mb-10 ms-6">
@@ -38,22 +38,23 @@
                                         clip-rule="evenodd" />
                                 </svg>
                             </span>
-                            <h3 class="font-medium leading-tight">{{ $timeline->nama }}</h3>
-                            <p class="text-sm">{{ $diffForHumans }}</p>
+                            <h3 class="font-medium leading-tight text-blue-600">{{ $timeline->nama }}</h3>
+                            <p class="text-sm text-blue-400">{{ $diffForHumans }}</p>
                         </li>
                     @else
                         @if ($timeline->status == 'Selesai')
                             <li class="mb-10 ms-6">
                                 <span
                                     class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-emerald-900">
-                                    <svg class="size-5 text-emerald-500 " aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                        class="size-8 text-emerald-500">
+                                        <path fill-rule="evenodd"
+                                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <h3 class="font-medium leading-tight">{{ $timeline->nama }}</h3>
-                                <p class="text-sm">{{ $diffForHumans }}</p>
+                                <h3 class="font-medium leading-tight text-emerald-600">{{ $timeline->nama }}</h3>
+                                <p class="text-sm text-emerald-400">{{ $diffForHumans }}</p>
                             </li>
                         @else
                             @if ($timeline->status == 'Perpanjang')
@@ -67,8 +68,8 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </span>
-                                    <h3 class="font-medium leading-tight">{{ $timeline->nama }}</h3>
-                                    <p class="text-sm">{{ $diffForHumans }}</p>
+                                    <h3 class="font-medium leading-tight text-orange-600">{{ $timeline->nama }}</h3>
+                                    <p class="text-sm text-orange-400">{{ $diffForHumans }}</p>
                                 </li>
                             @endif
                         @endif
@@ -80,12 +81,12 @@
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Ambil semua elemen dengan class text-sm
         var timeElements = document.querySelectorAll('.text-sm');
 
         // Loop melalui setiap elemen dan format waktu relatif
-        timeElements.forEach(function (element) {
+        timeElements.forEach(function(element) {
             var timestamp = element.textContent.trim();
             var diffForHumans = moment(timestamp).fromNow();
             element.textContent = diffForHumans;
