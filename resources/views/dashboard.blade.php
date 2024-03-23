@@ -13,6 +13,7 @@
                     <div>
                         <p class="mt-2 text-sm text-gray-500">Selamat Datang,</p>
                         <h1 class="font-bold text-xl uppercase">{{ Auth::user()->name }}</h1>
+                        <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
                     </div>
                     <div>
                         <a href="{{ route('data-diri-edit') }}">

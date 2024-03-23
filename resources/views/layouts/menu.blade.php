@@ -4,8 +4,7 @@
             <nav class="grid grid-flow-row grid-rows-4 px-3 py-5 max-h-screen min-h-full">
                 <div class=" row-span-3 px-3 py-5 relative">
                     <div>
-                        <div class="font-medium text-base text-gray-800 uppercase">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
+                        <div class="font-medium text-base text-gray-800 uppercase ">{{ Auth::user()->name }}</div>
                     </div>
                     <h1 class=" font-bold text-2xl border-b-2 border-indigo-900">MENU</h1>
                     <a href="{{ route('dashboard') }}"

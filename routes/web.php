@@ -114,13 +114,13 @@ Route::group(['middleware' => ['auth', 'checkRole:Peserta'], 'prefix' => 'Pesert
 
         //proposal
         Route::get('/proposal/form-ide-bisnis', [ProjectController::class, 'ide_bisnis'])->name('ide-bisnis');
-        Route::post('/proposal/form-ide-bisnis/input', [ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
+        Route::post('/proposal/form-ide-bisnis/input/{id_proposal}', [ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
         Route::get('/proposal/form-laba-rugi', [ProjectController::class, 'laba_rugi'])->name('laba-rugi');
-        Route::post('/proposal/form-laba-rugi/input', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
+        Route::post('/proposal/form-laba-rugi/input/{id_proposal}', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
         Route::get('/proposal/form-pemasaran', [ProjectController::class, 'pemasaran'])->name('pemasaran');
-        Route::post('/proposal/form-pemasaran/input', [ProjectController::class, 'pemasaran_create'])->name('pemasaran.input');
+        Route::post('/proposal/form-pemasaran/input/{id_proposal}', [ProjectController::class, 'pemasaran_create'])->name('pemasaran.input');
         Route::get('/proposal/form-maintenance', [ProjectController::class, 'maintenance'])->name('maintenance');
-        Route::post('/proposal/form-maintenance/input', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
+        Route::post('/proposal/form-maintenance/input/{id_proposal}', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
 
         Route::get('/model-bisnis/create-tim', [PesertaController::class, 'index'])->name('create.index');
     });

@@ -168,7 +168,7 @@ class ProjectController extends Controller
     }
 
     //proposal Create
-    public function ide_bisnis_create(Request $request)
+    public function ide_bisnis_create(Request $request,$id_proposal)
     {
         $request->validate([
             'ide_bisnis' => 'string|nullable',
@@ -189,10 +189,10 @@ class ProjectController extends Controller
         $proposal->save();
 
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->back()->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function laba_rugi_create(Request $request)
+    public function laba_rugi_create(Request $request,$id_proposal)
     {
         $request->validate([
             'deskripsi_laba_rugi' => 'string|nullable',
@@ -208,14 +208,14 @@ class ProjectController extends Controller
             $proposal->file_laba_rugi = $namaFile;
         }
         // Simpan data ke database
-        $proposal->deskripsi_laba_rugi = $request->deskripsi_laba_rugi;
+        $proposal->deskripsi_laba_rugi = strip_tags($request->deskripsi_laba_rugi);
         $proposal->save();
 
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->back()->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function pemasaran_create(Request $request)
+    public function pemasaran_create(Request $request,$id_proposal)
     {
         $request->validate([
             'file_pemasaran' => 'nullable|file|mimes:pdf|max:10240', // File pemasaran (optional)
@@ -231,15 +231,15 @@ class ProjectController extends Controller
             $proposal->file_pemasaran = $namaFile;
         }
         // Simpan data ke database
-        $proposal->deskripsi_pemasaran = $request->deskripsi_pemasaran;
+        $proposal->deskripsi_pemasaran = strip_tags($request->deskripsi_pemasaran);
 
         $proposal->save();
 
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->back()->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function maintenance_create(Request $request)
+    public function maintenance_create(Request $request,$id_proposal)
     {
         $request->validate([
             'deskripsi_maintenance' => 'string|nullable',
@@ -255,12 +255,12 @@ class ProjectController extends Controller
             $proposal->file_maintenance = $namaFile;
         }
         // Simpan data ke database
-        $proposal->deskripsi_maintenance = $request->deskripsi_maintenance;
+        $proposal->deskripsi_maintenance = strip_tags($request->deskripsi_maintenance);
 
         $proposal->save();
 
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->back()->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
     public function publish()
@@ -275,6 +275,6 @@ class ProjectController extends Controller
                 $daftar->status = 'Seleksi';
                 $daftar->save();
             }
-            return redirect('/myproject')->with('success', 'Data berhasil disimpan.');
+            return redirect()->route('my_project')->with('success', 'Data berhasil disimpan.');
     }
 }

@@ -215,7 +215,7 @@
                             </button>
                         </span>
                     @else
-                        @if (($adaKolomKosong && $daftar->kelompok->nama_kelompok == null && $anggota >= 3) || $anggota <= 4)
+                        @if ($adaKolomKosong || $daftar->kelompok->nama_kelompok == null || $anggota <= 3 )
                             <span class="sm:ml-3">
                                 <button type="button" disabled
                                     class="inline-flex items-center rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-500 cursor-not-allowed shadow-sm">

@@ -5,7 +5,7 @@
     <div id="accordion-collapse" data-accordion="collapse">
         <h2 id="accordion-collapse-heading-1">
             <button type="button"
-                class="{{ count($pesertaList)<=3 ? 'bg-red-200 text-red-700' : 'bg-emerald-200 text-emerald-700' }} flex items-center justify-between w-full p-5 font-medium border rounded-t-xl  "
+                class="flex items-center justify-between w-full p-5 font-medium border rounded-t-xl  "
                 data-accordion-target="#accordion-collapse-body-1" aria-expanded="true"
                 aria-controls="accordion-collapse-body-1">
                 <span>Anggota Kelompok?</span>
@@ -24,7 +24,7 @@
         </div>
         <h2 id="accordion-collapse-heading-2">
             <button type="button"
-                class="{{ $data->ide_bisnis == NULL && $data->bisnis_model_canvas == NULL ? 'bg-red-200 text-red-700' : 'bg-emerald-200 text-emerald-700' }} flex items-center justify-between w-full p-5 font-medium border  "
+                class="flex items-center justify-between w-full p-5 font-medium border  "
                 data-accordion-target="#accordion-collapse-body-2" aria-expanded="true"
                 aria-controls="accordion-collapse-body-2">
                 <span>Ide Bisnis?</span>
@@ -45,7 +45,7 @@
         </div>
         <h2 id="accordion-collapse-heading-3">
             <button type="button"
-                class="{{ $data->deskripsi_laba_rugi == NULL && $data->file_laba_rugi == NULL ? 'bg-red-200 text-red-700' : 'bg-emerald-200 text-emerald-700' }} flex items-center justify-between w-full p-5 font-medium border  "
+                class="flex items-center justify-between w-full p-5 font-medium border  "
                 data-accordion-target="#accordion-collapse-body-3" aria-expanded="true"
                 aria-controls="accordion-collapse-body-3">
                 <span>Laba Rugi?</span>
@@ -66,7 +66,7 @@
         </div>
         <h2 id="accordion-collapse-heading-4">
             <button type="button"
-                class="{{ $data->deksripsi_pemasaran == NULL && $data->file_pemasaran == NULL ? 'bg-red-200 text-red-700' : 'bg-emerald-200 text-emerald-700' }} flex items-center justify-between w-full p-5 font-medium border"
+                class=" flex items-center justify-between w-full p-5 font-medium border"
                 data-accordion-target="#accordion-collapse-body-4" aria-expanded="true"
                 aria-controls="accordion-collapse-body-4">
                 <span>Pemasaran?</span>
@@ -87,7 +87,7 @@
         </div>
         <h2 id="accordion-collapse-heading-5">
             <button type="button"
-                class="{{ $data->deskripsi_maintenance == NULL && $data->file_maintenance == NULL ? 'bg-red-200 text-red-700' : 'bg-emerald-200 text-emerald-700' }} flex items-center justify-between w-full p-5 font-medium border"
+                class=" flex items-center justify-between w-full p-5 font-medium border"
                 data-accordion-target="#accordion-collapse-body-5" aria-expanded="true"
                 aria-controls="accordion-collapse-body-5">
                 <span>Maintenance?</span>

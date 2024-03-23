@@ -24,7 +24,7 @@ class PesertaController extends Controller
         $proposal = Proposal::where('id_proposal', $id_proposal)->get();
 
         // Mengembalikan view dengan data peserta
-        return view('user.myproject.model-bisnis', ['pesertaList' => $pesertaList, 'proposal' => $proposal,'id_proposal' => $id_proposal]);
+        return view('user.myproject.detail-proposal', ['pesertaList' => $pesertaList, 'proposal' => $proposal,'id_proposal' => $id_proposal]);
     }
     public function store(Request $request)
     {
