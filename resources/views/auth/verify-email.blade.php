@@ -1,18 +1,21 @@
 <x-app-layout>
-    <x-auth-card>
+    <x-card-email>
         <x-slot name="logo">
             <a href="/">
                 <img src="https://www.telkomsel.com/sites/default/files/mainlogo-2022-rev.png" alt="Telkomsel" class=" w-32">
             </a>
         </x-slot>
 
+        <div class="mb-4 text-md text-gray-600">
+            {{ __('Terima Kasih Sudah Mendaftar, Harap Lakukan Verifikasi Alamat Email Terlebih Dahulu Dengan Cara Menekan Tombol Yang sudah Dikirimkan pada Email mu. Jika Tidak Menerima Email Verifikasi Silahkan Klik Tombol Di Bawah Ini') }}
+        </div>
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Thanks for signing up! Before getting started, could you  your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+            {{ __('Catatan: Pastikan Email Yang Anda Gunakan Adalah email Yang Aktif') }}
         </div>
 
         @if (session('status') == 'verification-link-sent')
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                {{ __('Link Verifikasi Terbaru Sudah Dikirimkan Ke Alamat Email mu') }}
             </div>
         @endif
 
@@ -22,11 +25,11 @@
 
                 <div>
                     <x-button>
-                        {{ __('Resend Verification Email') }}
+                        {{ __('Kirim Ulang Verifikasi Email') }}
                     </x-button>
                 </div>
             </form>
 
         </div>
-    </x-auth-card>
+    </x-card-email>
 </x-app-layout>
