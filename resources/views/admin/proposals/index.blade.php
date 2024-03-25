@@ -7,18 +7,20 @@
 @endsection
 
 @section('content')
-    <div class="mb-4">
-        <!-- Search Form -->
-        <!-- Modify the action and method as per your requirements -->
-        <form action="{{ route('admin.proposals.index') }}" method="GET">
-            <div class="flex items-center">
-                <input type="text" name="search" class="w-64 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Ketikan judul ,nama" value="{{ request('search') }}">
-                <button type="submit" class="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Search
-                </button>
-            </div>
-        </form>
-    </div>
+<div class="mb-4">
+    <!-- Search Form -->
+    <!-- Modify the action and method as per your requirements -->
+    <form action="{{ route('admin.proposals.index') }}" method="GET">
+        <div class="flex items-center">
+            <input type="text" name="search" class="w-64 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Ketikan judul ,nama" value="{{ request('search') }}">
+            <!-- Menambahkan input hidden untuk menyimpan nilai filter kelompok -->
+            <input type="hidden" name="kelompok" value="{{ request('kelompok') }}">
+            <button type="submit" class="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Search
+            </button>
+        </div>
+    </form>
+</div>
 
     <div class="mb-4">
         <!-- Filter Form -->
@@ -35,10 +37,13 @@
                         @endforeach
                     @endisset
                 </select>
+                <!-- Menambahkan input hidden untuk menyimpan nilai pencarian -->
+                <input type="hidden" name="search" value="{{ request('search') }}">
                 <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Filter</button>
             </div>
         </form>
     </div>
+
 
     @if($proposals->isEmpty())
         <p class="text-gray-500 text-center mt-4">No proposals found.</p>
@@ -115,20 +120,9 @@
                                     </form> --}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <form action="{{ route('admin.proposals.updateStatus', $proposal->id_proposal) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status" value="Approved">
-                                        <button type="submit" class="text-green-600 hover:text-green-900 ml-2">Approve</button>
-                                    </form>
-                                    <form action="{{ route('admin.proposals.updateStatus', $proposal->id_proposal) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status" value="Rejected">
-                                        <button type="submit" class="text-red-600 hover:text-red-900 ml-2">Reject</button>
-                                    </form>
+                                    <a href="{{ route('admin.proposals.approve', $proposal->id_proposal) }}" class="text-green-600 hover:text-green-900 ml-2">Approval</a>
                                 </td>
-
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

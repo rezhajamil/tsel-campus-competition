@@ -11,25 +11,35 @@ use App\Models\Peserta;
 class PendaftaranController extends Controller
 {
     // Menampilkan semua data pendaftaran
-    public function index()
-    {
-        // Menghitung jumlah pendaftaran
-        $jumlah_pendaftaran = Pendaftaran::count();
+    public function index(Request $request)
+{
+    // Menghitung jumlah pendaftaran
+    $jumlah_pendaftaran = Pendaftaran::count();
 
-        // Menghitung jumlah peserta
-        $jumlah_peserta = Peserta::count();
+    // Menghitung jumlah peserta
+    $jumlah_peserta = Peserta::count();
 
-        // Menghitung jumlah proposal dengan status "Publish"
-        $jumlah_publish = Proposal::where('status', 'Publish')->count();
+    // Menghitung jumlah proposal dengan status "Publish"
+    $jumlah_publish = Proposal::where('status', 'Publish')->count();
 
-        // Menghitung jumlah proposal dengan status "Proses"
-        $jumlah_proses = Proposal::where('status', 'Proses')->count();
+    // Menghitung jumlah proposal dengan status "Proses"
+    $jumlah_proses = Proposal::where('status', 'Proses')->count();
 
-        // Mengambil semua data pendaftaran
-        $pendaftarans = Pendaftaran::all();
+    // Mengambil semua data pendaftaran
+    $pendaftarans = Pendaftaran::all();
 
-        return view('dashboard-admin2', compact('pendaftarans', 'jumlah_pendaftaran', 'jumlah_peserta', 'jumlah_publish', 'jumlah_proses'));
+    // Jika terdapat query string proposal_id
+    if ($request->filled('proposal_id')) {
+        // Lakukan pencarian berdasarkan proposal_id
+        $proposal_id = $request->input('proposal_id');
+        $pendaftarans = Pendaftaran::whereHas('proposal', function ($query) use ($proposal_id) {
+            $query->where('id_proposal', $proposal_id);
+        })->get();
     }
+
+    return view('dashboard-admin2', compact('pendaftarans', 'jumlah_pendaftaran', 'jumlah_peserta', 'jumlah_publish', 'jumlah_proses'));
+}
+
 
     // Menampilkan form untuk membuat pendaftaran baru
     public function create()

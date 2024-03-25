@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Proposal;
 use App\Models\Kelompok;
 use App\Models\Pendaftaran;
+use App\Models\Notification;
 use App\Models\Peserta;
 
 use Illuminate\Http\Request;
@@ -19,27 +20,26 @@ class ProposalController extends Controller
      */
     public function index(Request $request)
     {
-
         $kelompoks = Kelompok::all();
 
         $query = Proposal::query();
 
-
-        if ($request->filled('kelompok')) {
-            $query->whereHas('kelompok', function ($query) use ($request) {
-                $query->where('nama_kelompok', $request->kelompok);
-            });
-        }
-
-
+        // Pencarian berdasarkan judul/nama
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-
                 $q->whereHas('user', function ($q) use ($search) {
                     $q->where('name', 'like', "%$search%");
                 });
                 $q->orWhere('judul_proposal', 'like', "%$search%");
+            });
+        }
+
+        // Filter by kelompok
+        if ($request->filled('kelompok')) {
+            $kelompok = $request->input('kelompok');
+            $query->whereHas('kelompok', function ($query) use ($kelompok) {
+                $query->where('nama_kelompok', $kelompok);
             });
         }
 
@@ -48,6 +48,7 @@ class ProposalController extends Controller
         $proposals = $query->paginate(10);
         return view('admin.proposals.index', compact('proposals', 'kelompoks'));
     }
+
 
 
     /**
@@ -99,6 +100,12 @@ class ProposalController extends Controller
     {
         return view('admin.proposals.edit', compact('proposal'));
     }
+    public function approve(Proposal $proposal)
+    {
+        // Lakukan operasi yang diperlukan untuk menampilkan halaman komentar dan status proposal
+        return view('admin.proposals.approve', compact('proposal'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -118,6 +125,25 @@ class ProposalController extends Controller
 
         return redirect()->route('admin.proposals.index')
             ->with('success', 'Proposal updated successfully.');
+    }
+
+    public function updateStatus(Request $request, $id_proposal)
+    {
+        // Update status dan komentar pada pendaftaran yang sesuai
+        $pendaftaran = Pendaftaran::where('proposal_id', $id_proposal)->first();
+        $pendaftaran->status = $request->status;
+        $pendaftaran->komentar = $request->comment;
+        $pendaftaran->save();
+
+        // Buat notifikasi
+        $notification = new Notification();
+        $notification->user_id = $pendaftaran->user_id;
+        $notification->pendaftaran_id = $pendaftaran->id;
+        $notification->message = $request->comment; // Menggunakan komentar sebagai pesan notifikasi
+        $notification->save();
+
+        return redirect()->route('dashboard-admin2', ['proposal_id' => $id_proposal])
+            ->with('success', 'Proposal status updated successfully.');
     }
 
 
@@ -152,17 +178,4 @@ class ProposalController extends Controller
      * @param  int  $id_proposal
      * @return \Illuminate\Http\Response
      */
-    public function updateStatus(Request $request, $id_proposal)
-    {
-        $request->validate([
-            'status' => 'required|in:Approved,Rejected',
-        ]);
-
-        $proposal = Proposal::findOrFail($id_proposal);
-        $proposal->status = $request->status;
-        $proposal->save();
-
-        return redirect()->route('admin.proposals.index')
-            ->with('success', 'Proposal status updated successfully.');
-    }
 }
