@@ -3,14 +3,14 @@
 @section('content')
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border border-gray-200">
-            @foreach ($proposal as $data)
+            @foreach ($pendaftarans as $daftar)
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                <form action="{{ route('maintenance.input', ['id_proposal' => $data->id_proposal]) }}" method="post"
+                <form action="{{ route('maintenance.input', ['id_proposal' => $daftar->proposal->id_proposal]) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <div>
                         <x-label for="deskripsi_maintenance" :value="__('Deskripsi Maintenance')"></x-label>
-                        @if ($data->deskripsi_maintenance == null)
+                        @if ($daftar->proposal->deskripsi_maintenance == null)
                             <input id="deskripsi_maintenance" type="hidden" name="deskripsi_maintenance">
                             <trix-editor input="deskripsi_maintenance"></trix-editor>
                         @else
@@ -20,15 +20,15 @@
                     </div>
                     <div class="col-span-2 mt-3">
                         <x-label for="file_maintenance" :value="__('Maintenance File')"></x-label>
-                        @if ($data->file_maintenance == null)
+                        @if ($daftar->proposal->file_maintenance == null)
                             <x-input id="file_maintenance"
                                 class=" block w-fit text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none p-3"
                                 type="file" name="file_maintenance" accept="application/pdf"></x-input>
                         @else
                             <x-input id="file_maintenance"
                                 class=" block w-fit text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none p-3"
-                                type="file" name="file_maintenance" value="{{ $data->file_maintenance }}"></x-input>
-                            <a href="{{ asset('storage/file_maintenance/' . $data->file_maintenance) }}"><button
+                                type="file" name="file_maintenance" value="{{ $daftar->proposal->file_maintenance }}"></x-input>
+                            <a href="{{ asset('storage/file_maintenance/' . $daftar->proposal->file_maintenance) }}"><button
                                     type="button"
                                     class="mt-3 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -36,7 +36,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                     </svg>
-                                    {{ $data->file_maintenance }}
+                                    {{ $daftar->proposal->file_maintenance }}
                                 </button></a>
                         @endif
                     </div>

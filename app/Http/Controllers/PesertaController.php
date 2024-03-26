@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\Auth;
 
 class PesertaController extends Controller
@@ -21,10 +22,10 @@ class PesertaController extends Controller
 
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $proposal = Proposal::where('id_proposal', $id_proposal)->get();
+        $pendaftarans = Pendaftaran::where('proposal_id', $id_proposal)->get();
 
         // Mengembalikan view dengan data peserta
-        return view('user.myproject.detail-proposal', ['pesertaList' => $pesertaList, 'proposal' => $proposal,'id_proposal' => $id_proposal]);
+        return view('user.myproject.detail-proposal', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans,'id_proposal' => $id_proposal]);
     }
     public function store(Request $request)
     {

@@ -30,8 +30,6 @@ class DashboardController extends Controller
         $seleksi = $pendaftaran->where('status', 'Seleksi')->count();
         $timeline = Timeline::all();
 
-
-
         return view('dashboard-user', [
             'pendaftaran' => $pendaftaran,
             'accepted' => $accepted,

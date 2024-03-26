@@ -32,6 +32,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('notif-list', function () {
+    auth()->user()->notifications->markAsRead();
+    return redirect()->back();
+})->name('notif.list');
+
 
 Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'admin'], function () {
     Route::get('/dashboard-admin', function () {

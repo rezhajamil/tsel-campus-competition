@@ -21,7 +21,7 @@ class DatadiriController extends Controller
         $userId = Auth::user()->user_id;
         $peserta = User::findOrFail($userId);
         $peserta->update($request->all());
-    
+        notify()->success('Data Diri Berhasil Di Update', 'BAGUS');
         // 5. Redirect pengguna ke halaman yang sesuai setelah berhasil melakukan update
         return redirect()->route('data-diri')->with('success', 'Data berhasil diperbarui.');
 

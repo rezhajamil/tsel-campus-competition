@@ -35,6 +35,7 @@
             font-family: 'Telkomsel Batik';
         }
     </style>
+    @notifyCss
 </head>
 
 <body class="font-sans antialiased">
@@ -44,8 +45,9 @@
         <main>
             {{ $slot }}
         </main>
+        <x-notify::notify />
     </div>
-
+    @notifyJs
 </body>
 
 </html>

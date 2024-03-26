@@ -26,7 +26,7 @@
             @endif
 
             {{-- anggota --}}
-            @if ($anggota <= 3)
+            @if ($anggota <= 2)
                 <li class="flex items-center justify-center gap-2 text-blue-600">
                     <span class="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold"> 2
                     </span>

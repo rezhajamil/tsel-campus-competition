@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Peserta;
 use App\Models\Kelompok;
 use App\Models\Proposal;
 use App\Models\Timeline;
 use App\Models\Pendaftaran;
+use App\Notifications\PendaftaranNotification;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\PublishNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ProjectController extends Controller
 {
@@ -21,9 +26,9 @@ class ProjectController extends Controller
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
         $proposal = Proposal::where('user_id', $userId)->get();
-        $pendaftaran = Pendaftaran::where('user_id', $userId)->get();
+        $pendaftarans = Pendaftaran::where('user_id', $userId)->get();
 
-        return view('user.myproject.form.form-ide-bisnis', ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
+        return view('user.myproject.form.form-ide-bisnis', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans]);
     }
     public function laba_rugi(Request $request)
     {
@@ -31,9 +36,9 @@ class ProjectController extends Controller
         $userId = Auth::user()->user_id;
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $proposal = Proposal::where('user_id', $userId)->get();
+        $pendaftarans = Pendaftaran::where('user_id', $userId)->get();
 
-        return view('user.myproject.form.form-laba-rugi', ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
+        return view('user.myproject.form.form-laba-rugi', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans]);
     }
     public function pemasaran(Request $request)
     {
@@ -41,9 +46,9 @@ class ProjectController extends Controller
         $userId = Auth::user()->user_id;
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $proposal = Proposal::where('user_id', $userId)->get();
+        $pendaftarans = Pendaftaran::where('user_id', $userId)->get();
 
-        return view('user.myproject.form.form-pemasaran', ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
+        return view('user.myproject.form.form-pemasaran', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans]);
     }
     public function maintenance(Request $request)
     {
@@ -51,15 +56,16 @@ class ProjectController extends Controller
         $userId = Auth::user()->user_id;
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $proposal = Proposal::where('user_id', $userId)->get();
+        $pendaftarans = Pendaftaran::where('user_id', $userId)->get();
 
-        return view('user.myproject.form.form-maintenance', ['pesertaList' => $pesertaList, 'proposal' => $proposal]);
+        return view('user.myproject.form.form-maintenance', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans]);
     }
 
     //kelompok
-    public function nama_kelompok(){
+    public function nama_kelompok()
+    {
         $timeline = Timeline::all();
-        return view('user.myproject.create-kelompok',[ 'timelines' => $timeline]); 
+        return view('user.myproject.create-kelompok', ['timelines' => $timeline]);
     }
     public function create_kelompok(Request $request)
     {
@@ -103,6 +109,9 @@ class ProjectController extends Controller
 
             // Tambahkan kolom lain yang sesuai dengan kebutuhan Anda
         ]);
+        $admin = User::where('role', 'Admin')->get();
+        Notification::send($admin, new PendaftaranNotification($pendaftaran));
+        notify()->success('Proposal Berhasil Di Buat', 'BAGUS');
         return redirect()->route('my_project')->with('error', 'Nama Kelompok sudah ada');
     }
 
@@ -160,15 +169,15 @@ class ProjectController extends Controller
             // Memeriksa apakah jumlah anggota sudah mencapai batas maksimum (5)
             if ($jumlahAnggota <= 4) {
                 Peserta::create($request->all());
-                return redirect()->route('model-bisnis',$data->id_proposal)->with('success', 'Data berhasil disimpan.');
+                return redirect()->route('model-bisnis', $data->id_proposal)->with('success', 'Data berhasil disimpan.');
             } else {
-                return redirect()->route('model-bisnis',$data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
+                return redirect()->route('model-bisnis', $data->id_proposal)->with('error', 'Jumlah Anggota Sudah Melebihi Kapasitas');
             }
         }
     }
 
     //proposal Create
-    public function ide_bisnis_create(Request $request,$id_proposal)
+    public function ide_bisnis_create(Request $request, $id_proposal)
     {
         $request->validate([
             'ide_bisnis' => 'string|nullable',
@@ -188,11 +197,12 @@ class ProjectController extends Controller
 
         $proposal->save();
 
+        notify()->success('Data Ide Bisnis Berhasil Di Input', 'BAGUS');
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis', $id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function laba_rugi_create(Request $request,$id_proposal)
+    public function laba_rugi_create(Request $request, $id_proposal)
     {
         $request->validate([
             'deskripsi_laba_rugi' => 'string|nullable',
@@ -211,11 +221,12 @@ class ProjectController extends Controller
         $proposal->deskripsi_laba_rugi = strip_tags($request->deskripsi_laba_rugi);
         $proposal->save();
 
+        notify()->success('Data Laba-Rugi Berhasil Di Input', 'BAGUS');
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis', $id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function pemasaran_create(Request $request,$id_proposal)
+    public function pemasaran_create(Request $request, $id_proposal)
     {
         $request->validate([
             'file_pemasaran' => 'nullable|file|mimes:pdf|max:10240', // File pemasaran (optional)
@@ -235,11 +246,12 @@ class ProjectController extends Controller
 
         $proposal->save();
 
+        notify()->success('Data Pemasaran Berhasil Di Input', 'BAGUS');
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis', $id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
-    public function maintenance_create(Request $request,$id_proposal)
+    public function maintenance_create(Request $request, $id_proposal)
     {
         $request->validate([
             'deskripsi_maintenance' => 'string|nullable',
@@ -259,8 +271,9 @@ class ProjectController extends Controller
 
         $proposal->save();
 
+        notify()->success('Data Maintenance Berhasil Di Input', 'BAGUS');
         // Redirect atau lakukan apa pun yang diperlukan setelah update berhasil
-        return redirect()->route('model-bisnis',$id_proposal)->with('success', 'Proposal berhasil diperbarui.');
+        return redirect()->route('model-bisnis', $id_proposal)->with('success', 'Proposal berhasil diperbarui.');
     }
 
     public function publish()
@@ -269,12 +282,15 @@ class ProjectController extends Controller
         $pendaftaran = Pendaftaran::with(['user', 'kelompok', 'proposal'])
             ->where('user_id', $userId)
             ->get();
-            foreach ($pendaftaran as $daftar){
-                $daftar->proposal->status = 'Publish';
-                $daftar->proposal->save();
-                $daftar->status = 'Seleksi';
-                $daftar->save();
-            }
-            return redirect()->route('my_project')->with('success', 'Data berhasil disimpan.');
+        foreach ($pendaftaran as $daftar) {
+            $daftar->proposal->status = 'Publish';
+            $daftar->proposal->save();
+            $daftar->status = 'Seleksi';
+            $daftar->save();
+        }
+        $admin = User::where('role', 'admin')->first();
+        Notification::send($admin, new PublishNotification($pendaftaran));
+        notify()->success('Proposal Berhasil Di Publish', 'BAGUS');
+        return redirect()->route('my_project')->with('success', 'Data berhasil disimpan.');
     }
 }

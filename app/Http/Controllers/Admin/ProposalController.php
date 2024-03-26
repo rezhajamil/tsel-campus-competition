@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Proposal;
-use App\Models\Kelompok;
-use App\Models\Pendaftaran;
-use App\Models\Notification;
 use App\Models\Peserta;
-
+use App\Models\Kelompok;
+use App\Models\Proposal;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\StatusNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ProposalController extends Controller
 {
@@ -136,12 +137,9 @@ class ProposalController extends Controller
         $pendaftaran->save();
 
         // Buat notifikasi
-        $notification = new Notification();
-        $notification->user_id = $pendaftaran->user_id;
-        $notification->pendaftaran_id = $pendaftaran->id;
-        $notification->message = $request->comment; // Menggunakan komentar sebagai pesan notifikasi
-        $notification->save();
-
+        $user = User::where('user_id',$pendaftaran->user_id)->first();
+        Notification::send($user, new StatusNotification($pendaftaran));
+        notify()->success('Status Berhasil Di update','BAGUS');
         return redirect()->route('dashboard-admin2', ['proposal_id' => $id_proposal])
             ->with('success', 'Proposal status updated successfully.');
     }
