@@ -25,6 +25,7 @@ class Pendaftaran extends Model
         'user_id',
         'kelompok_id',
         'proposal_id',
+        'komentar',
         'status',
     ];
 

@@ -65,7 +65,9 @@ Route::group(['middleware' => ['auth', 'checkRole:admin'], 'prefix' => 'admin'],
     Route::get('/proposals/{proposal}/edit', [ProposalController::class, 'edit'])->name('admin.proposals.edit');
     Route::put('/proposals/{proposal}', [ProposalController::class, 'update'])->name('admin.proposals.update');
     Route::delete('/proposals/{proposal}', [ProposalController::class, 'destroy'])->name('admin.proposals.destroy');
-    Route::put('proposals/{id_proposal}/update-status', [ProposalController::class, 'updateStatus'])->name('admin.proposals.updateStatus');
+    Route::get('/proposals/{proposal}/approve', [ProposalController::class, 'approve'])->name('admin.proposals.approve');
+    Route::put('/proposals/{proposal}/approve', [ProposalController::class, 'updateStatus'])->name('admin.proposals.updateStatus');
+
 
     Route::get('/pendaftarans', [PendaftaranController::class, 'index'])->name('dashboard-admin');
     Route::get('/pendaftarans/create', [PendaftaranController::class, 'create'])->name('admin.pendaftarans.create');
