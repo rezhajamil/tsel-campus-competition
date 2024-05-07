@@ -19,7 +19,7 @@ class CheckRole
     {
         // Memeriksa apakah pengguna sudah login
         if (!$request->user()) {
-            return redirect('/login');
+            return redirect('/');
         }
 
         // Memeriksa peran pengguna
