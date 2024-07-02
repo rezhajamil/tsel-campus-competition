@@ -2,7 +2,7 @@
 
 @section('judul_content')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Edit Timeline') }}
+        <a href="{{ route('admin.timelines.index') }}">{{ __('Timeline') }}</a> > <span class="font-normal">{{ __('Edit Timeline') }}</span>
     </h2>
 @endsection
 
@@ -17,7 +17,7 @@
             </div>
             <div class="mt-4">
                 <label for="deskripsi" class="block">Deskripsi:</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-textarea rounded-md w-full" rows="4">{{ $timeline->deskripsi }}</textarea>
+                <textarea name="deskripsi" id="deskripsi" class="form-textarea rounded-md w-full p-2" rows="4">{{ $timeline->deskripsi }}</textarea>
             </div>
             <div class="mt-4">
                 <label for="waktu" class="block">Waktu:</label>
@@ -25,7 +25,7 @@
             </div>
             <div class="mt-4">
                 <label for="status" class="block">Status:</label>
-                <select name="status" id="status" class="form-select rounded-md w-full">
+                <select name="status" id="status" class="form-select rounded-md w-full p-2">
                     <option value="Belum Mulai" {{ $timeline->status == 'Belum Mulai' ? 'selected' : '' }}>Belum Mulai</option>
                     <option value="Mulai" {{ $timeline->status == 'Mulai' ? 'selected' : '' }}>Mulai</option>
                     <option value="Selesai" {{ $timeline->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>

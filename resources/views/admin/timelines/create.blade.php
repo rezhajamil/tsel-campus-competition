@@ -2,7 +2,7 @@
 
 @section('judul_content')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Create Timeline') }}
+        <a href="{{ route('admin.timelines.index') }}">{{ __('Timeline') }}</a> > <span class="font-normal">{{ __('Create Timeline') }}</span>
     </h2>
 @endsection
 
@@ -19,7 +19,7 @@
 
                 <div class="mt-4">
                     <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                    <textarea name="deskripsi" id="deskripsi" rows="3" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                    <textarea name="deskripsi" id="deskripsi" rows="3" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"></textarea>
                 </div>
 
                 <div class="mt-4">
@@ -29,7 +29,7 @@
 
                 <div class="mt-4">
                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="status" id="status" required class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select name="status" id="status" required class="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="Belum Mulai">Belum Mulai</option>
                         <option value="Mulai">Mulai</option>
                         <option value="Selesai">Selesai</option>

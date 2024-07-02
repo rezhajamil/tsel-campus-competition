@@ -12,7 +12,7 @@
                     // Hitung perbedaan waktu relatif
                     $diffForHumans = Carbon\Carbon::parse($timeline->waktu)->diffForHumans();
                 @endphp
-                @if ($timeline->status == 'Belum mulai')
+                @if ($timeline->status == 'Belum Mulai')
                     <li class="mb-10 ms-6">
                         <span
                             class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-gray-900">
