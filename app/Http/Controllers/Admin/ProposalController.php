@@ -88,7 +88,7 @@ class ProposalController extends Controller
      */
     public function show(Proposal $proposal)
     {
-        return view('admin.proposals.show', compact('proposal'));
+        return view('admin.pro posals.show', compact('proposal'));
     }
 
     /**
@@ -99,7 +99,8 @@ class ProposalController extends Controller
      */
     public function edit(Proposal $proposal)
     {
-        return view('admin.proposals.edit', compact('proposal'));
+        $peserta = Peserta::where('user_id', $proposal->user_id)->get();
+        return view('admin.proposals.edit', compact('proposal', 'peserta'));
     }
     public function approve(Proposal $proposal)
     {
@@ -108,25 +109,7 @@ class ProposalController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,  $id_proposal)
-    {
-        $request->validate([
-            // Add validation rules here based on your requirements
-        ]);
 
-        $proposal = Proposal::where('id_proposal', $id_proposal)->firstorFail();
-        $proposal->update($request->all());
-
-        return redirect()->route('admin.proposals.index')
-            ->with('success', 'Proposal updated successfully.');
-    }
 
     public function updateStatus(Request $request, $id_proposal)
     {
@@ -145,35 +128,4 @@ class ProposalController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id_proposal)
-    {
-        try {
-            // Hapus Pendaftaran yang terkait dengan Proposal
-            Pendaftaran::where('id_proposal', $id_proposal)->delete();
-
-            // Hapus Proposal
-            Proposal::findOrFail($id_proposal)->delete();
-
-            return redirect()->route('admin.proposals.index')
-                ->with('success', 'Proposal deleted successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Failed to delete proposal. Error: ' . $e->getMessage());
-        }
-    }
-
-
-    /**
-     * Update the status of the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id_proposal
-     * @return \Illuminate\Http\Response
-     */
 }

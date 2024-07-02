@@ -1,11 +1,8 @@
 <div>
     <div class="hidden sm:block max-w-full w-full col-start-1 col-end-2 sm:px-6 lg:px-8">
         <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm bg-white">
-            <nav class="grid grid-flow-row grid-rows-4 px-3 py-5 max-h-screen min-h-full">
+            <nav class="grid grid-flow-row grid-rows-4 px-3 py-5 max-h-screen min-h-screen">
                 <div class=" row-span-3 px-3 py-5 relative">
-                    <div>
-                        <div class="font-medium text-base text-gray-800 uppercase ">{{ Auth::user()->name }}</div>
-                    </div>
                     <div class="flex justify-between border-b-2 border-indigo-900">
                         <h1 class=" font-bold text-2xl">MENU</h1>
                         <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification"
@@ -68,7 +65,7 @@
                         </a>
                     </div>
                     <a href="{{ route('dashboard') }}"
-                        class="text-sm flex justify-start items-center mt-5 {{ request()->routeIs('dashboard') ? 'text-indigo-900 font-bold' : '' }}">
+                        class="text-md flex justify-start items-center mt-5 {{ request()->routeIs('dashboard') ? 'text-indigo-900 font-bold' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -76,7 +73,7 @@
                         </svg>
                         Dashboard</a>
                     <a href="{{ route('data-diri') }}"
-                        class="text-sm flex justify-start items-center mt-3 {{ request()->routeIs('data-diri') ? 'text-indigo-900 font-bold' : '' }}">
+                        class="text-md flex justify-start items-center mt-3 {{ request()->routeIs('data-diri') ? 'text-indigo-900 font-bold' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -84,7 +81,7 @@
                         </svg>
                         Data Diri</a>
                     <a href="{{ route('my_project') }}"
-                        class="text-sm flex justify-start items-center mt-3 {{ request()->routeIs('my_project') ? 'text-indigo-900 font-bold' : '' }}">
+                        class="text-md flex justify-start items-center mt-3 {{ request()->routeIs('my_project') ? 'text-indigo-900 font-bold' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5">
                             <path stroke-linecap="round" stroke-linejoin="round"

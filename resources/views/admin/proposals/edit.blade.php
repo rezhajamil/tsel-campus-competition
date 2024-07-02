@@ -7,92 +7,73 @@
     </h2>
 @endsection
 
-@section('content') 
+@section('content')
     <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-        <div class="p-6">
-            <form action="{{ route('admin.proposals.update', $proposal->id_proposal) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="mb-4">
-                    <label for="judul_proposal" class="block text-gray-700 text-sm font-bold mb-2">Judul Proposal:</label>
-                    <input type="text" name="judul_proposal" id="judul_proposal" class="form-input rounded-md shadow-sm mt-1 block w-full"
-                        value="{{ old('judul_proposal', $proposal->judul_proposal) }}" required autofocus>
+        <div class="p-6 grid grid-cols-2">
+            <div class="w-full h-full">
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Nama Kelompok</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->kelompok->nama_kelompok }}</p>
                 </div>
-
-                <div class="mb-4">
-                    <label for="ide_bisnis" class="block text-gray-700 text-sm font-bold mb-2">Ide Bisnis:</label>
-                    <textarea name="ide_bisnis" id="ide_bisnis" class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('ide_bisnis', $proposal->ide_bisnis) }}</textarea>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Anggota Kelompok</span>
+                    @foreach ($peserta as $anggota)
+                        <div class="py-1">
+                            <p class="text-lg font-semibold">{{ $anggota->npsn }} - {{ $anggota->nama_lengkap }} <span class="text-sm font-light">({{ $anggota->jabatan }})</span> </p>
+                        </div>
+                    @endforeach
                 </div>
-
-                <div class="mb-4">
-                    <label for="model_bisnis_canvas" class="block text-gray-700 text-sm font-bold mb-2">Model Bisnis Canvas:</label>
-                    <textarea name="model_bisnis_canvas" id="model_bisnis_canvas" class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('model_bisnis_canvas', $proposal->model_bisnis_canvas) }}</textarea>
+            </div>
+            <div class="w-full h-full">
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Judul Proposal</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->judul_proposal }}</p>
                 </div>
-
-                <div class="mb-4">
-                    <label for="deskripsi_laba_rugi" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi Laba Rugi:</label>
-                    <textarea name="deskripsi_laba_rugi" id="deskripsi_laba_rugi" class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('deskripsi_laba_rugi', $proposal->deskripsi_laba_rugi) }}</textarea>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Ide Bisnis</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->ide_bisnis }}</p>
                 </div>
-
-                <div class="mb-4">
-                    <label for="file_laba_rugi" class="block text-gray-700 text-sm font-bold mb-2">File Laba Rugi:</label>
-                    <input type="file" name="file_laba_rugi" id="file_laba_rugi" class="form-input rounded-md shadow-sm mt-1 block w-full">
-                    @if ($proposal->file_laba_rugi)
-                        <a href="{{ asset('storage/' . $proposal->file_laba_rugi) }}" target="_blank">{{ $proposal->file_laba_rugi }}</a>
-                    @else
-                        <span class="text-gray-500">No file uploaded</span>
-                    @endif
+                <div class="pb-4">
+                    <span class="font-batik text-red-500 mb-2">Bisnis Model Canvas</span>
+                    <div class="py-2">
+                        <a href="{{ asset('storage/' . $proposal->model_bisnis_canvas) }}" target="_blank"
+                            class="p-2 border border-red-500 text-red-500 font-semibold rounded-lg">{{ $proposal->model_bisnis_canvas }}</a>
+                    </div>
                 </div>
-
-                <div class="mb-4">
-                    <label for="deskripsi_pemasaran" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi Pemasaran:</label>
-                    <textarea name="deskripsi_pemasaran" id="deskripsi_pemasaran" class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('deskripsi_pemasaran', $proposal->deskripsi_pemasaran) }}</textarea>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Laba Rugi</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->deskripsi_laba_rugi }}</p>
                 </div>
-
-
-                <div class="mb-4">
-                    <label for="file_pemasaran" class="block text-gray-700 text-sm font-bold mb-2">File Pemasaran:</label>
-                    <input type="file" name="file_pemasaran" id="file_pemasaran" class="form-input rounded-md shadow-sm mt-1 block w-full">
-                    @if ($proposal->file_pemasaran)
-                        <a href="{{ asset('storage/' . $proposal->file_pemasaran) }}" target="_blank">{{ $proposal->file_pemasaran }}</a>
-                    @else
-                        <span class="text-gray-500">No file uploaded</span>
-                    @endif
+                <div class="pb-4">
+                    <span class="font-batik text-red-500 mb-2">File Laba Rugi</span>
+                    <div class="py-2">
+                        <a href="{{ asset('storage/' . $proposal->file_laba_rugi) }}" target="_blank"
+                            class="p-2 border border-red-500 text-red-500 font-semibold rounded-lg">{{ $proposal->file_laba_rugi }}</a>
+                    </div>
                 </div>
-
-                
-
-                <div class="mb-4">
-                    <label for="deskripsi_maintenance" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi Maintenance:</label>
-                    <textarea name="deskripsi_maintenance" id="deskripsi_maintenance" class="form-textarea rounded-md shadow-sm mt-1 block w-full"
-                        required>{{ old('deskripsi_maintenance', $proposal->deskripsi_maintenance) }}</textarea>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Pemasaran</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->deskripsi_pemasaran }}</p>
                 </div>
-
-                <div class="mb-4">
-                    <label for="file_maintenance" class="block text-gray-700 text-sm font-bold mb-2">File Maintenance:</label>
-                    <input type="file" name="file_maintenance" id="file_maintenance" class="form-input rounded-md shadow-sm mt-1 block w-full">
-                    @if ($proposal->file_maintenance)
-                        <a href="{{ asset('storage/' . $proposal->file_maintenance) }}" target="_blank">{{ $proposal->file_maintenance }}</a>
-                    @else
-                        <span class="text-gray-500">No file uploaded</span>
-                    @endif
+                <div class="pb-4">
+                    <span class="font-batik text-red-500 mb-2">File Pemasaran</span>
+                    <div class="py-2">
+                        <a href="{{ asset('storage/' . $proposal->file_pemasaran) }}" target="_blank"
+                            class="p-2 border border-red-500 text-red-500 font-semibold rounded-lg">{{ $proposal->file_pemasaran }}</a>
+                    </div>
                 </div>
-
-
-                <div class="mb-4">
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Save Changes
-                    </button>
-                    <a href="{{ route('admin.proposals.index') }}"
-                        class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cancel</a>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500">Maintenance</span>
+                    <p class="text-2xl font-semibold">{{ $proposal->deskripsi_maintenance }}</p>
                 </div>
-            </form>
+                <div class="pb-4">
+                    <span class="font-batik text-red-500 mb-2">File Maintenance</span>
+                    <div class="py-2">
+                        <a href="{{ asset('storage/' . $proposal->file_maintenance) }}" target="_blank"
+                            class="p-2 border border-red-500 text-red-500 font-semibold rounded-lg">{{ $proposal->file_maintenance }}</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

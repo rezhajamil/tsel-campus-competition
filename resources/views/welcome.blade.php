@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>by.U Goes To Campus</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="{{ asset('js/modal.js') }}"></script>
 
     <style>
         @font-face {
@@ -31,6 +32,7 @@
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
     @include('content-welcome.nav')
     @include('content-welcome.hero')
+    @include('content-welcome.regis')
 </body>
 
 </html>
