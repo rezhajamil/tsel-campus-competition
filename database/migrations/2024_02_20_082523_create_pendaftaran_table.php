@@ -14,18 +14,20 @@ class CreatePendaftaranTable extends Migration
     public function up()
     {
         Schema::create('pendaftaran', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_pendaftaran');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelompok_id');
             $table->unsignedBigInteger('proposal_id');
+            $table->unsignedBigInteger('penilaian_id');
             $table->string('komentar')->nullable();
             $table->string('status');
             $table->timestamps();
 
             // Define foreign key constraints
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->foreign('kelompok_id')->references('id')->on('kelompok');
-            $table->foreign('proposal_id')->references('id_proposal')->on('proposal');
+            $table->foreign('kelompok_id')->references('kelompok_id')->on('kelompok');
+            $table->foreign('proposal_id')->references('proposal_id')->on('proposal');
+            $table->foreign('penilaian_id')->references('penilaian_id')->on('penilaian');
         });
     }
 

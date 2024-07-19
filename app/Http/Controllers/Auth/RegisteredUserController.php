@@ -40,7 +40,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'telp' => ['required', 'unique:users']
+            'telp' => ['required', 'unique:users'],
+            'ktm' => ['required', 'string', 'image/jpg']
         ]);
 
         // Mengambil kode prefix untuk operator Telkomsel dari tabel kode_prefix_operator

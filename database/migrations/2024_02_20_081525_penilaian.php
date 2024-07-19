@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKelompokTable extends Migration
+class Penilaian extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateKelompokTable extends Migration
      */
     public function up()
     {
-        Schema::create('kelompok', function (Blueprint $table) {
-            $table->bigIncrements('kelompok_id');
+        Schema::create('penilaian', function (Blueprint $table) {
+            $table->bigIncrements('penilaian_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->string('nama_kelompok')->unique();
+            $table->unsignedBigInteger('proposal_id');
+            $table->foreign('proposal_id')->references('proposal_id')->on('proposal');
+            $table->string('nilai')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateKelompokTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelompok');
+        Schema::dropIfExists('penilaian');
     }
 }

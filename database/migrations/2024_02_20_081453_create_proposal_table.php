@@ -14,7 +14,7 @@ class CreateProposalTable extends Migration
     public function up()
     {
         Schema::create('proposal', function (Blueprint $table) {
-            $table->bigIncrements('id_proposal');
+            $table->bigIncrements('proposal_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelompok_id');
             $table->string('judul_proposal')->nullable();
@@ -28,10 +28,9 @@ class CreateProposalTable extends Migration
             $table->string('file_maintenance')->nullable();
             $table->string('status');
             $table->timestamps();
-
-
+            
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->foreign('kelompok_id')->references('id')->on('kelompok');
+            $table->foreign('kelompok_id')->references('kelompok_id')->on('kelompok');
         });
     }
 
