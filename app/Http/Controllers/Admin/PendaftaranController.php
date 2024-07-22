@@ -33,7 +33,7 @@ class PendaftaranController extends Controller
         // Lakukan pencarian berdasarkan proposal_id
         $proposal_id = $request->input('proposal_id');
         $pendaftarans = Pendaftaran::whereHas('proposal', function ($query) use ($proposal_id) {
-            $query->where('id_proposal', $proposal_id);
+            $query->where('proposal_id', $proposal_id);
         })->get();
     }
 

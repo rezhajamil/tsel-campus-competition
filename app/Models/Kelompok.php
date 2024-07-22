@@ -16,7 +16,7 @@ class Kelompok extends Model
      */
     protected $table = 'kelompok';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'kelompok_id';
 
     public function pendaftarans()
     {

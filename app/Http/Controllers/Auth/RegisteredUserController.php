@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Models\UserOTP;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 
@@ -36,15 +34,18 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi request data
         $request->validate([
+            'kode_kampus' => ['required', 'string', 'max:20'],
+            'nim' => ['required', 'string', 'max:20'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'telp' => ['required', 'unique:users'],
-            'ktm' => ['required', 'string', 'image/jpg']
+            'telp' => ['required', 'string', 'min:11', 'max:13'],
+            'ktm' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048']
         ]);
 
-        // Mengambil kode prefix untuk operator Telkomsel dari tabel kode_prefix_operator
+        // Ambil kode prefix untuk operator Telkomsel dari tabel kode_prefix_operator
         $telkomselPrefixes = DB::table('kode_prefix_operator')
             ->where('operator', 'Telkomsel')
             ->pluck('kode_prefix');
@@ -53,7 +54,7 @@ class RegisteredUserController extends Controller
             abort(500, 'Tidak ada kode prefix untuk operator Telkomsel.');
         }
 
-        // Validasi nomor telepon dengan menggunakan kode prefix Telkomsel
+        // Validasi nomor telepon dengan kode prefix Telkomsel
         $request->validate([
             'telp' => [
                 'required',
@@ -66,8 +67,7 @@ class RegisteredUserController extends Controller
                             break;
                         }
                     }
-                    $length = strlen($value);
-                    if (!$validPrefix || $length < 10 || $length > 13) {
+                    if (!$validPrefix || strlen($value) < 11 || strlen($value) > 13) {
                         $fail('Nomor telepon harus Telkomsel dan memiliki panjang karakter antara 11 hingga 13 digit');
                     }
                 },
@@ -76,15 +76,25 @@ class RegisteredUserController extends Controller
             'telp.regex' => 'Nomor telepon harus dimulai dengan salah satu kode awalan Telkomsel: ' . $telkomselPrefixes->implode(', '),
         ]);
 
+        // Simpan file KTM dengan nama baru
+        $ktmFilename = $request->name . '_KTM.' . $request->file('ktm')->extension();
+        $ktmPath = $request->file('ktm')->storeAs('ktm', $ktmFilename, 'public');
 
         // Buat user baru
-        $user = User::create([
-            'name' => $request->name,
-            'telp' => $request->telp,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'Peserta', // Peran default 'peserta'
-        ]);
+        // Membuat instance baru dari Peserta
+        $user = new User;
+        $user->npsn = $request->kode_kampus; // Menyimpan npsn
+        $user->nim = $request->nim;
+        $user->name = $request->name;
+        $user->telp = $request->telp;
+        $user->email = $request->email;
+        $user->ktm = $ktmPath; // Simpan path file ktm
+        $user->password = Hash::make($request->password);
+        $user->role = 'Peserta';
+
+        // Menyimpan data peserta ke database
+        
+        $user->save();
 
         // Panggil event Registered untuk menandakan bahwa user telah terdaftar
         event(new Registered($user));
@@ -92,22 +102,15 @@ class RegisteredUserController extends Controller
         // Autentikasi user yang baru terdaftar
         Auth::login($user);
 
-        // Redirect ke home setelah berhasil terdaftar
+        // Redirect ke halaman berdasarkan peran
         return $this->redirectBasedOnRole();
-        // UserOTP::create([
-        //     'user_id' => $user->user_id,
-        //     'otp_code' => rand(100000,999999),
-        //     'expired_at' => Date::now()->addMinutes(5)
-        // ]);
-        // event(new Registered($user));
-        // return redirect()->route('otp-verification', $user->user_id);
     }
 
     protected function redirectBasedOnRole()
     {
         if (Auth::user()->role === 'admin') {
             return redirect()->route('dashboard-admin');
-        }else if(Auth::user()->role === 'Peserta'){
+        } elseif (Auth::user()->role === 'Peserta') {
             return redirect()->route('dashboard');
         }
 

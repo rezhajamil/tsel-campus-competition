@@ -16,7 +16,7 @@
                                 <span class="label-text text-red-600">Kartu Tanda Mahasiswa</span>
                             </div>
                             <label class="input input-bordered border-red-600 w-sm bg-white text-red-600 flex items-center gap-2">
-                                <box-icon name='school' type='solid' color='#f30303'></box-icon>
+                                <box-icon type='solid' name='file-image' color='#f30303'></box-icon>
                                 <input id="ktm" type="file" name="ktm" accept="image/jpeg, image/jpg" />
                             </label>
                         </label>

@@ -111,10 +111,10 @@ class ProposalController extends Controller
 
 
 
-    public function updateStatus(Request $request, $id_proposal)
+    public function updateStatus(Request $request, $proposal_id)
     {
         // Update status dan komentar pada pendaftaran yang sesuai
-        $pendaftaran = Pendaftaran::where('proposal_id', $id_proposal)->first();
+        $pendaftaran = Pendaftaran::where('proposal_id', $proposal_id)->first();
         $pendaftaran->status = $request->status;
         $pendaftaran->komentar = $request->comment;
         $pendaftaran->save();
@@ -123,7 +123,7 @@ class ProposalController extends Controller
         $user = User::where('user_id',$pendaftaran->user_id)->first();
         Notification::send($user, new StatusNotification($pendaftaran));
         notify()->success('Status Berhasil Di update','BAGUS');
-        return redirect()->route('dashboard-admin2', ['proposal_id' => $id_proposal])
+        return redirect()->route('dashboard-admin2', ['proposal_id' => $proposal_id])
             ->with('success', 'Proposal status updated successfully.');
     }
 

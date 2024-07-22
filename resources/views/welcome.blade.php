@@ -32,7 +32,7 @@
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
     @include('content-welcome.nav')
     @include('content-welcome.hero')
-    @include('content-welcome.regis')
+    {{-- @include('content-welcome.regis') --}}
 </body>
 
 </html>

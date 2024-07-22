@@ -123,7 +123,7 @@
                 {{-- Button --}}
                 <div class="mt-5 flex lg:ml-4 lg:mt-0">
                     <span class="mr-3 block">
-                        <a href="{{ route('model-bisnis', ['id_proposal' => $daftar->proposal_id]) }}">
+                        <a href="{{ route('model-bisnis', ['proposal_id' => $daftar->proposal_id]) }}">
                             <button type="button"
                                 class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                 <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"

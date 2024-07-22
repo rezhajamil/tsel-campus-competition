@@ -15,17 +15,17 @@ class PesertaController extends Controller
     public function index(Request $request)
     {
         // Menentukan nilai $page berdasarkan nama route
-        $id_proposal = $request->route('id_proposal');
+        $proposal_id = $request->route('proposal_id');
 
         // Mendapatkan ID pengguna yang sedang login
         $userId = Auth::user()->user_id;
 
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $pesertaList = Peserta::where('user_id', $userId)->get();
-        $pendaftarans = Pendaftaran::where('proposal_id', $id_proposal)->get();
+        $pendaftarans = Pendaftaran::where('proposal_id', $proposal_id)->get();
 
         // Mengembalikan view dengan data peserta
-        return view('user.myproject.detail-proposal', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans,'id_proposal' => $id_proposal]);
+        return view('user.myproject.detail-proposal', ['pesertaList' => $pesertaList, 'pendaftarans' => $pendaftarans,'proposal_id' => $proposal_id]);
     }
     public function store(Request $request)
     {
@@ -42,7 +42,6 @@ class PesertaController extends Controller
             'nama_kelompok' =>  'required|string',
             'nomor_wa' => 'required|string|max:15',
             'email' => 'required|email|unique:peserta,email',
-            'kemampuan_deskripsi' => 'required|string|max:255',
             'jabatan' => 'required|string',
 
         ], [
@@ -58,8 +57,6 @@ class PesertaController extends Controller
             'email.unique' => 'Email sudah terdaftar.',
             'nomor_wa.required' => 'Nomor WA wajib diisi.',
             'nomor_wa.max' => 'Nomor WA tidak boleh lebih dari 15 karakter.',
-            'kemampuan_deskripsi.required' => 'Deskripsi kemampuan wajib diisi.',
-            'kemampuan_deskripsi.max' => 'Deskripsi kemampuan tidak boleh lebih dari 255 karakter.',
             'jabatan.required' => 'Jabatan wajib diisi.',
         ]);
 

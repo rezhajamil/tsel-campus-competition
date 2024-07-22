@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Route;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\KampusController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DatadiriController;
@@ -14,8 +15,7 @@ use App\Http\Controllers\Admin\TimelineController;
 use App\Http\Controllers\Admin\ProposalController;
 use App\Http\Controllers\Admin\PendaftaranController;
 use App\Http\Controllers\Admin\PesertaControllerAdmin;
-
-
+use App\Http\Controllers\PrefixController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +31,10 @@ use App\Http\Controllers\Admin\PesertaControllerAdmin;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/schools', [SchoolController::class, 'index']);
+
+Route::get('/api/telkomsel-prefixes', [PrefixController::class, 'getTelkomselPrefixes']);
+
 
 Route::get('notif-list', function () {
     auth()->user()->notifications->markAsRead();
@@ -108,7 +112,7 @@ Route::group(['middleware' => ['auth', 'checkRole:Peserta'], 'prefix' => 'Pesert
 
         //project
         Route::get('/myproject', [DashboardController::class, 'my_project'])->name('my_project');
-        Route::get('/myproject/proposal/{id_proposal}', [PesertaController::class, 'index'])->name('model-bisnis');
+        Route::get('/myproject/proposal/{proposal_id}', [PesertaController::class, 'index'])->name('model-bisnis');
         Route::post('/myproject/publish', [ProjectController::class, 'publish'])->name('publish');
 
         //kelompok
@@ -121,13 +125,13 @@ Route::group(['middleware' => ['auth', 'checkRole:Peserta'], 'prefix' => 'Pesert
 
         //proposal
         Route::get('/proposal/form-ide-bisnis', [ProjectController::class, 'ide_bisnis'])->name('ide-bisnis');
-        Route::post('/proposal/form-ide-bisnis/input/{id_proposal}', [ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
+        Route::post('/proposal/form-ide-bisnis/input/{proposal_id}', [ProjectController::class, 'ide_bisnis_create'])->name('ide-bisnis.input');
         Route::get('/proposal/form-laba-rugi', [ProjectController::class, 'laba_rugi'])->name('laba-rugi');
-        Route::post('/proposal/form-laba-rugi/input/{id_proposal}', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
+        Route::post('/proposal/form-laba-rugi/input/{proposal_id}', [ProjectController::class, 'laba_rugi_create'])->name('laba-rugi.input');
         Route::get('/proposal/form-pemasaran', [ProjectController::class, 'pemasaran'])->name('pemasaran');
-        Route::post('/proposal/form-pemasaran/input/{id_proposal}', [ProjectController::class, 'pemasaran_create'])->name('pemasaran.input');
+        Route::post('/proposal/form-pemasaran/input/{proposal_id}', [ProjectController::class, 'pemasaran_create'])->name('pemasaran.input');
         Route::get('/proposal/form-maintenance', [ProjectController::class, 'maintenance'])->name('maintenance');
-        Route::post('/proposal/form-maintenance/input/{id_proposal}', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
+        Route::post('/proposal/form-maintenance/input/{proposal_id}', [ProjectController::class, 'maintenance_create'])->name('maintenance.input');
 
         Route::get('/model-bisnis/create-tim', [PesertaController::class, 'index'])->name('create.index');
     });

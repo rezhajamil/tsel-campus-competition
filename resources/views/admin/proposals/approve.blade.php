@@ -19,7 +19,7 @@
                         <p>{{ $proposal->deskripsi_proposal }}</p>
                     </div>
 
-                    <form action="{{ route('admin.proposals.updateStatus', $proposal->id_proposal) }}" method="POST" class="mt-6">
+                    <form action="{{ route('admin.proposals.updateStatus', $proposal->proposal_id) }}" method="POST" class="mt-6">
                         @csrf
                         @method('PUT')
 

@@ -5,7 +5,7 @@
         <div class="p-6 bg-white border border-gray-200">
             @foreach ($pendaftarans as $daftar)
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                <form action="{{ route('pemasaran.input', ['id_proposal' => $daftar->proposal->id_proposal]) }}" method="post"
+                <form action="{{ route('pemasaran.input', ['proposal_id' => $daftar->proposal->proposal_id]) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <div>

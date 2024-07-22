@@ -16,11 +16,11 @@ class Proposal extends Model
      */
     protected $table = 'proposal';
 
-    protected $primaryKey = 'id_proposal';
+    protected $primaryKey = 'proposal_id';
 
     public function pendaftarans()
     {
-        return $this->hasMany(Pendaftaran::class, 'id_proposal');
+        return $this->hasMany(Pendaftaran::class, 'proposal_id');
     }
 
     /**

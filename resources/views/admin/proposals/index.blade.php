@@ -102,10 +102,10 @@
                                         </button>
                                         <div x-show="open" class="z-10">
                                             <div>
-                                                <a href="{{ route('admin.proposals.edit', $proposal->id_proposal) }}"
+                                                <a href="{{ route('admin.proposals.edit', $proposal->proposal_id) }}"
                                                     class="text-indigo-600 hover:text-indigo-900">Detail</a>
 
-                                                <a href="{{ route('admin.proposals.approve', $proposal->id_proposal) }}"
+                                                <a href="{{ route('admin.proposals.approve', $proposal->proposal_id) }}"
                                                     class="text-green-600 hover:text-green-900 ml-2">Approval</a>
                                             </div>
 

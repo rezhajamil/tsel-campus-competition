@@ -18,7 +18,7 @@ class CreatePendaftaranTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelompok_id');
             $table->unsignedBigInteger('proposal_id');
-            $table->unsignedBigInteger('penilaian_id');
+            $table->unsignedBigInteger('penilaian_id')->nullable();
             $table->string('komentar')->nullable();
             $table->string('status');
             $table->timestamps();
