@@ -59,7 +59,7 @@
                                 @if ($daftar->proposal->file_laba_rugi == null)
                                     (Kosong)
                                 @else
-                                    <a href="{{ asset('storage/model_bisnis_canvas/' . $daftar->proposal->file_laba_rugi) }}">
+                                    <a href="{{ asset('storage/file_laba_rugi/' . $daftar->proposal->file_laba_rugi) }}">
                                         <button type="button"
                                             class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -90,7 +90,7 @@
                                 @if ($daftar->proposal->file_pemasaran == null)
                                     (Kosong)
                                 @else
-                                    <a href="{{ asset('storage/model_bisnis_canvas/' . $daftar->proposal->file_pemasaran) }}">
+                                    <a href="{{ asset('storage/file_pemasaran/' . $daftar->proposal->file_pemasaran) }}">
                                         <button type="button"
                                             class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -121,7 +121,7 @@
                                 @if ($daftar->proposal->file_maintenance == null)
                                     (Kosong)
                                 @else
-                                    <a href="{{ asset('storage/model_bisnis_canvas/' . $daftar->proposal->file_maintenance) }}">
+                                    <a href="{{ asset('storage/file_maintenance/' . $daftar->proposal->file_maintenance) }}">
                                         <button type="button"
                                             class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

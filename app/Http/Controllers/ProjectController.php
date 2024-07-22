@@ -21,7 +21,7 @@ class ProjectController extends Controller
     {
         $ktmFilename = $nama . '_KTM.' . $file->extension();
         $ktmPath = $file->storeAs('ktm', $ktmFilename, 'public');
-        return $ktmFilename;
+        return $ktmPath;
     }
 
     //form input
@@ -102,19 +102,17 @@ class ProjectController extends Controller
             'proposal_id' => $proposal->proposal_id,
             'status' => 'Proses',
         ]);
-        Peserta::create([
-            'user_id' => $user->user_id,
-            'nama_lengkap' => $user->name,
-            'npsn' => $user->npsn,
-            'nim' => $user->nim,
-            'nama_kelompok' => $kelompok->nama_kelompok,
-            'nomor_wa' => $user->telp,
-            'email' => $user->email,
-            'ktm' => $user->ktm,
-            'jabatan' => 'Ketua',
+        $ketua = new Peserta;
+        $ketua->user_id = $user->user_id;
+        $ketua->nama_lengkap = $user->name;
+        $ketua->npsn = $user->npsn;
+        $ketua->nim = $user->nim;
+        $ketua->nama_kelompok = $kelompok->nama_kelompok;
+        $ketua->nomor_wa = $user->telp;
+        $ketua->email = $user->email;
+        $ketua->ktm = $user->ktm;
+        $ketua->jabatan = 'Ketua';
 
-            // Tambahkan kolom lain yang sesuai dengan kebutuhan Anda
-        ]);
         $admin = User::where('role', 'Admin')->get();
         Notification::send($admin, new PendaftaranNotification($pendaftaran));
         notify()->success('Proposal Berhasil Di Buat', 'BAGUS');
@@ -304,17 +302,36 @@ class ProjectController extends Controller
     public function publish()
     {
         $userId = Auth::user()->user_id;
+
+        // Mengambil data pendaftaran yang terkait dengan user_id
         $pendaftaran = Pendaftaran::with(['user', 'kelompok', 'proposal'])
             ->where('user_id', $userId)
-            ->get();
-        foreach ($pendaftaran as $daftar) {
-            $daftar->proposal->status = 'Publish';
-            $daftar->proposal->save();
-            $daftar->status = 'Seleksi';
-            $daftar->save();
+            ->first();
+
+        // Mengambil data proposal yang terkait dengan user_id
+        $proposal = Proposal::where('user_id', $userId)->first();
+
+        // Periksa apakah pendaftaran dan proposal ditemukan
+        if (!$pendaftaran || !$proposal) {
+            notify()->error('Pendaftaran atau Proposal tidak ditemukan.', 'Gagal');
+            return redirect()->route('my_project')->with('error', 'Data tidak ditemukan.');
         }
+
+        // Mengubah status proposal menjadi 'Publish'
+        $proposal->status = 'Publish';
+        $proposal->save();
+
+        // Mengubah status pendaftaran menjadi 'Seleksi'
+        $pendaftaran->status = 'Seleksi';
+        $pendaftaran->save();
+
+        // Mengambil admin untuk pengiriman notifikasi
         $admin = User::where('role', 'admin')->first();
-        Notification::send($admin, new PublishNotification($pendaftaran));
+        if ($admin) {
+            Notification::send($admin, new PublishNotification($pendaftaran));
+        }
+
+        // Notifikasi sukses
         notify()->success('Proposal Berhasil Di Publish', 'BAGUS');
         return redirect()->route('my_project')->with('success', 'Data berhasil disimpan.');
     }

@@ -18,7 +18,7 @@
                         @endif
                     </div>
                     <div class="col-span-2 mt-3">
-                        <x-label for="model_bisnis_canvas" :value="__('Bisnis Model Canvas File')"></x-label>
+                        <x-label for="model_bisnis_canvas" :value="__('Bisnis Model Canvas File (PDF)')"></x-label>
                         @if ($daftar->proposal->model_bisnis_canvas == null)
                             <x-input id="model_bisnis_canvas"
                                 class=" block w-fit text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none p-3"

@@ -82,9 +82,6 @@
                                     Nomor WA</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Kemampuan Deskripsi</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Jabatan</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -101,12 +98,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $peserta->nama_kelompok }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $peserta->email }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $peserta->nomor_wa }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $peserta->kemampuan_deskripsi }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $peserta->jabatan }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('admin.Pesertas.edit', $peserta->id) }}"
+                                        <a href="{{ route('admin.Pesertas.edit', $peserta->id_peserta) }}"
                                             class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                        <form action="{{ route('admin.Pesertas.destroy', $peserta->id) }}" method="POST"
+                                        <form action="{{ route('admin.Pesertas.destroy', $peserta->id_peserta) }}" method="POST"
                                             class="inline">
                                             @csrf
                                             @method('DELETE')

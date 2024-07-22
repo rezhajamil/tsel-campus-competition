@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSekolah;
 use App\Models\User;
 use App\Models\Peserta;
 use App\Models\Proposal;
@@ -57,10 +58,12 @@ class DashboardController extends Controller
 
         // Mengambil data peserta yang memiliki user_id yang sesuai dengan ID pengguna yang sedang login
         $datadiri = User::where('user_id', $userId)->get();
+        $data = User::where('user_id', $userId)->first();
+        $namasekolah = DataSekolah::where('NPSN', $data->npsn)->first();
         $timeline = Timeline::all();
 
         // Mengembalikan view dengan data user
-        return view('user.' . $page, ['datadiri' => $datadiri,'timelines'=>$timeline]);
+        return view('user.' . $page, ['datadiri' => $datadiri,'timelines'=>$timeline, 'kampus'=>$namasekolah]);
     }
 
     public function my_project()

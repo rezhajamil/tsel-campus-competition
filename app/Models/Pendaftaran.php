@@ -16,6 +16,8 @@ class Pendaftaran extends Model
      */
     protected $table = 'pendaftaran';
 
+    protected $primaryKey = 'id_pendaftaran';
+
     /**
      * The attributes that are mass assignable.
      *

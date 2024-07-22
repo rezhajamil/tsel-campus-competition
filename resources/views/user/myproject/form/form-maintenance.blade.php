@@ -19,7 +19,7 @@
                         @endif
                     </div>
                     <div class="col-span-2 mt-3">
-                        <x-label for="file_maintenance" :value="__('Maintenance File')"></x-label>
+                        <x-label for="file_maintenance" :value="__('Maintenance File (PDF)')"></x-label>
                         @if ($daftar->proposal->file_maintenance == null)
                             <x-input id="file_maintenance"
                                 class=" block w-fit text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none p-3"
