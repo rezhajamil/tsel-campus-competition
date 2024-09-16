@@ -97,19 +97,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->kelompok->nama_kelompok }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $proposal->judul_proposal }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap relative">
-                                        <button @click="open = ! open" class="p-1 text-cyan-500">
-                                            <span>Action</span>
-                                        </button>
-                                        <div x-show="open" class="z-10">
-                                            <div>
-                                                <a href="{{ route('admin.proposals.edit', $proposal->proposal_id) }}"
-                                                    class="text-indigo-600 hover:text-indigo-900">Detail</a>
-
-                                                <a href="{{ route('admin.proposals.approve', $proposal->proposal_id) }}"
-                                                    class="text-green-600 hover:text-green-900 ml-2">Approval</a>
-                                            </div>
-
-                                        </div>
+                                        <a href="{{ route('admin.proposals.edit', $proposal->proposal_id) }}"
+                                            class="text-indigo-600 hover:text-indigo-900">Detail</a>
                                     </td>
 
                                 </tr>

@@ -26,8 +26,8 @@ class DashboardController extends Controller
         $proposal = Proposal::whereHas('user', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->first();
-        $accepted = $pendaftaran->where('status', 'Diterima')->count();
-        $decline = $pendaftaran->where('status', 'Ditolak')->count();
+        $accepted = $pendaftaran->where('status', 'Approved')->count();
+        $decline = $pendaftaran->where('status', 'Rejected')->count();
         $seleksi = $pendaftaran->where('status', 'Seleksi')->count();
         $timeline = Timeline::all();
 

@@ -16,6 +16,8 @@ class Peserta extends Model
      */
     protected $table = 'peserta';
 
+    protected $primaryKey = 'id_peserta';
+
     /**
      * The attributes that are mass assignable.
      *

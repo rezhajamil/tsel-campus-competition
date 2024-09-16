@@ -15,10 +15,6 @@
                         {{ $proposal->judul_proposal }}
                     </div>
 
-                    <div class="mt-6 text-gray-500">
-                        <p>{{ $proposal->deskripsi_proposal }}</p>
-                    </div>
-
                     <form action="{{ route('admin.proposals.updateStatus', $proposal->proposal_id) }}" method="POST" class="mt-6">
                         @csrf
                         @method('PUT')

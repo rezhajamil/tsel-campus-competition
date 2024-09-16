@@ -6,6 +6,7 @@ use App\Models\Peserta;
 use App\Models\Kelompok;
 use App\Models\Proposal;
 use App\Models\Pendaftaran;
+use App\Models\Penilaian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -99,8 +100,9 @@ class ProposalController extends Controller
      */
     public function edit(Proposal $proposal)
     {
+        $pendaftaran = Pendaftaran::where('proposal_id', $proposal->proposal_id)->first();
         $peserta = Peserta::where('user_id', $proposal->user_id)->get();
-        return view('admin.proposals.edit', compact('proposal', 'peserta'));
+        return view('admin.proposals.edit', compact('proposal', 'peserta','pendaftaran'));
     }
     public function approve(Proposal $proposal)
     {
@@ -113,19 +115,42 @@ class ProposalController extends Controller
 
     public function updateStatus(Request $request, $proposal_id)
     {
+        // Validasi input
+        $request->validate([
+            'status' => 'required|string|in:Approved,Revision,Rejected',
+            'comment' => 'nullable|string',
+            'nilai' => 'required|numeric|min:0|max:100',
+        ]);
+
         // Update status dan komentar pada pendaftaran yang sesuai
         $pendaftaran = Pendaftaran::where('proposal_id', $proposal_id)->first();
-        $pendaftaran->status = $request->status;
-        $pendaftaran->komentar = $request->comment;
-        $pendaftaran->save();
 
-        // Buat notifikasi
-        $user = User::where('user_id',$pendaftaran->user_id)->first();
-        Notification::send($user, new StatusNotification($pendaftaran));
-        notify()->success('Status Berhasil Di update','BAGUS');
+        if ($pendaftaran) {
+            $pendaftaran->status = $request->status;
+            $pendaftaran->komentar = $request->comment;
+            $pendaftaran->save();
+
+            // Simpan nilai penilaian
+            Penilaian::create(
+                [
+                    'user_id' => $pendaftaran->user_id,
+                    'proposal_id' => $proposal_id,
+                    'nilai' => $request->nilai,
+                ]
+            );
+
+            // Buat notifikasi
+            $user = User::find($pendaftaran->user_id);
+            if ($user) {
+                Notification::send($user, new StatusNotification($pendaftaran));
+            }
+
+            notify()->success('Status Berhasil Diupdate', 'BAGUS');
+        } else {
+            notify()->error('Pendaftaran tidak ditemukan', 'GAGAL');
+        }
+
         return redirect()->route('dashboard-admin2', ['proposal_id' => $proposal_id])
             ->with('success', 'Proposal status updated successfully.');
     }
-
-
 }

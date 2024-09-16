@@ -102,16 +102,18 @@ class ProjectController extends Controller
             'proposal_id' => $proposal->proposal_id,
             'status' => 'Proses',
         ]);
-        $ketua = new Peserta;
-        $ketua->user_id = $user->user_id;
-        $ketua->nama_lengkap = $user->name;
-        $ketua->npsn = $user->npsn;
-        $ketua->nim = $user->nim;
-        $ketua->nama_kelompok = $kelompok->nama_kelompok;
-        $ketua->nomor_wa = $user->telp;
-        $ketua->email = $user->email;
+        $ketua = Peserta::create([
+            'user_id' => $user->user_id,
+            'nama_lengkap' => $user->name,
+            'npsn' => $user->npsn,
+            'nim' => $user->nim,
+            'nama_kelompok' => $kelompok->nama_kelompok,
+            'nomor_wa' => $user->telp,
+            'email' => $user->email,
+            'jabatan' => 'Ketua'
+        ]);
         $ketua->ktm = $user->ktm;
-        $ketua->jabatan = 'Ketua';
+        $ketua->save();
 
         $admin = User::where('role', 'Admin')->get();
         Notification::send($admin, new PendaftaranNotification($pendaftaran));
